@@ -8,14 +8,58 @@
     <title>Сотрудник</title>
 </head>
 <body>
-    <p>Табельный номер @Model.Id</p>
-    <p>Фамилия @Model.LastName</p>
-    <p>Имя @Model.FirstName</p>
-    <p>Отчество @Model.Patronymic</p>
-    <p>Возраст @Model.Age</p>
-    <p>Должность @Model.Position</p>
-    <p>Дата приема на работу @Model.DateOfEmployment</p>
+    <div style="max-width: 550px">
+        <h2 style="text-align: center">Карточка сотрудника</h2>
+    </div>
+    <div style="display: flex; max-width: 550px">
+        <div style="object-fit: contain; width: 200px; height: 200px; border: 1px solid grey">
+            @*<img src=@String.Format("~/Home/Image/{0}.png", Model.Id) alt="photo">*@
+            <img src="~/Home/Images/1.png" alt="photo">
+        </div>
+        <div>
+            <form action="#">
+                <table width="100%" cellspacing="0" cellpadding="4">
+                    <tr> 
+                        <td align="right" width="200">Табельный номер</td>
+                        <td><input type="number" size="20" value="@Model.Id"></td>
+                    </tr>
+                    <tr> 
+                        <td align="right" width="200">Фамилия</td>
+                        <td><input type="text" size="20" value="@Model.LastName"></td>
+                    </tr>
+                    <tr> 
+                        <td align="right" width="200">Имя</td>
+                    <td><input type="text" size="20" value="@Model.FirstName"></td>
+                    </tr>
+                    <tr> 
+                        <td align="right" width="200">Отчество</td>
+                        <td><input type="text" size="20" value="@Model.Patronymic"></td>
+                    </tr>
+                    <tr> 
+                        <td align="right" width="200">Возраст</td>
+                        <td><input type="number" size="20" value="@Model.Age"></td>
+                    </tr>
+                    <tr> 
+                        <td align="right" width="200">Должность</td>
+                        <td><input type="text" size="20" value="@Model.Position"></td>
+                    </tr>
+                    <tr> 
+                        <td align="right" width="200">Дата приема на работу</td>
+                        <td><input type="text" size="20" value="@Model.DateOfEmployment"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr> 
+                        <td></td>
+                        <td><input type="submit" value="Сохранить изменения"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>    
+    </div>
     <hr/>
     <a href="~/home/Employees">Назад к списку сотрудников</a>
-</body>
+ </body>
 </html>
