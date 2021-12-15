@@ -24,7 +24,7 @@ namespace WebStore.Controllers
             var employee = __Employees.FirstOrDefault(item => item.Id == id);
             if (employee == null)
                 return NotFound();
-            ViewBag.Image = String.Format("~/images/photos/{0}.png", employee.Id);
+            ViewBag.Image = String.Format("{0}.png", employee.Id);
             return View(employee);
         }
     }

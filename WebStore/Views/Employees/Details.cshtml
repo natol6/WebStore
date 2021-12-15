@@ -8,7 +8,7 @@
     <div style="display: flex; max-width: 550px">
         <div style="object-fit: contain; width: 200px; height: 200px">
             @*<img src="@String.Format("~/images/photo/{0}.png", Model.Id)" alt="photo">*@
-            <img style="max-width: 100%; height: auto" src="@ViewBag.Image" alt="photo">
+            <img style="max-width: 100%; height: auto" src="~/images/photos/@ViewBag.Image" alt="photo">
         </div>
         <div>
             <form action="#">
