@@ -1,20 +1,14 @@
 ﻿@model WebStore.Models.Employee
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Сотрудник</title>
-</head>
-<body>
-    <div style="max-width: 550px">
+ <div class="container">
+     <div style="max-width: 550px">
         <h2 style="text-align: center">Карточка сотрудника</h2>
     </div>
     <div style="display: flex; max-width: 550px">
-        <div style="object-fit: contain; width: 200px; height: 200px; border: 1px solid grey">
-            @*<img src=@String.Format("~/Home/Image/{0}.png", Model.Id) alt="photo">*@
-            <img src="~/Home/Images/1.png" alt="photo">
+        <div style="object-fit: contain; width: 200px; height: 200px">
+            @*<img src="@String.Format("~/images/photo/{0}.png", Model.Id)" alt="photo">*@
+            <img style="max-width: 100%; height: auto" src="@ViewBag.Image" alt="photo">
         </div>
         <div>
             <form action="#">
@@ -60,6 +54,7 @@
         </div>    
     </div>
     <hr/>
-    <a href="~/home/Employees">Назад к списку сотрудников</a>
- </body>
-</html>
+    <a asp-action="Index">Назад к списку сотрудников</a>
+ 
+
+ </div>

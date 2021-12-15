@@ -19,9 +19,12 @@ namespace WebStore.Controllers
             return View(result);
         }
         
-        public IActionResult Employee(int id)
+        public IActionResult Details(int id)
         {
-            var employee = __Employees.Find(item => item.Id == id);
+            var employee = __Employees.FirstOrDefault(item => item.Id == id);
+            if (employee == null)
+                return NotFound();
+            ViewBag.Image = String.Format("~/images/photos/{0}.png", employee.Id);
             return View(employee);
         }
     }
