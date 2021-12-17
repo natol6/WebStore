@@ -12,20 +12,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Home\Images\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Views\Home\Images\1.png">
+    <None Include="wwwroot\images\photos\1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Views\Home\Images\2.png">
+    <None Include="wwwroot\images\photos\2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Views\Home\Images\3.png">
+    <None Include="wwwroot\images\photos\3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Views\Home\Images\4.png">
+    <None Include="wwwroot\images\photos\4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
