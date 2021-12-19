@@ -9,6 +9,7 @@ namespace WebStore.Controllers
         {
             return View();
         }
+        public void Throw(string message) => throw new ApplicationException(message);
         
     }
 }

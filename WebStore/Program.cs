@@ -1,4 +1,5 @@
 ﻿using WebStore.Infrastructure.Conventions;
+using WebStore.Infrastructure.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,22 +13,24 @@ services.AddControllersWithViews(opt =>
 
 
 var app = builder.Build();
-//var configuration = app.Configuration;
-//var greeting = configuration["CustomGreetings"];
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
+
+app.Map("/testpath", async context => await context.Response.WriteAsync("Test middleware"));
+
 app.UseStaticFiles();
 app.UseRouting();
+app.UseMiddleware<TestMiddleware>();
+app.UseWelcomePage("/welcome");
 
-//app.MapGet("/", () => app.Configuration["CustomGreetings"]);
 app.MapGet("/throw", () =>
 {
     throw new ApplicationException("Ошибка в программе!");
 });
 
-//app.MapDefaultControllerRoute();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=home}/{action=index}/{id?}");
