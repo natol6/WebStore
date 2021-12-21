@@ -111,8 +111,12 @@ namespace WebStore.Controllers
         public IActionResult DeleteConfirmed(int id)
         {
             if (!_EmployeesData.Delete(id))
+            {
+                _Logger.LogInformation("Неуспешная попытка удаления сотрудника Id: {0} ", id);
                 return NotFound();
+            }
 
+            _Logger.LogInformation("Удален сотрудник Id: {0} ", id);
             return RedirectToAction("Index");
         }
 
