@@ -9,50 +9,52 @@
             <img style="max-height: 100%; width: auto" src="~/images/photos/@ViewBag.Image" alt="photo">
         </div>
         <div>
-            <form action="#">
-                <table width="100%" cellspacing="0" cellpadding="4">
-                    <tr> 
-                        <td align="right" width="200">Табельный номер</td>
-                        <td><input type="number" size="20" value="@Model.Id"></td>
-                    </tr>
-                    <tr> 
-                        <td align="right" width="200">Фамилия</td>
-                        <td><input type="text" size="20" value="@Model.LastName"></td>
-                    </tr>
-                    <tr> 
-                        <td align="right" width="200">Имя</td>
-                    <td><input type="text" size="20" value="@Model.FirstName"></td>
-                    </tr>
-                    <tr> 
-                        <td align="right" width="200">Отчество</td>
-                        <td><input type="text" size="20" value="@Model.Patronymic"></td>
-                    </tr>
-                    <tr> 
-                        <td align="right" width="200">Возраст</td>
-                        <td><input type="number" size="20" value="@Model.Age"></td>
-                    </tr>
-                    <tr> 
-                        <td align="right" width="200">Должность</td>
-                        <td><input type="text" size="20" value="@Model.Position"></td>
-                    </tr>
-                    <tr> 
-                        <td align="right" width="200">Дата приема на работу</td>
-                        <td><input type="text" size="20" value="@Model.DateOfEmployment"></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr> 
-                        <td></td>
-                        <td><input type="submit" value="Сохранить изменения"></td>
-                    </tr>
-                </table>
-            </form>
+            <table width="100%" cellspacing="0" cellpadding="4">
+                <tr> 
+                    <td align="right" width="200">Табельный номер</td>
+                    <td width="5">:</td>
+                    <td>@Model.Id</td>
+                </tr>
+                <tr> 
+                    <td align="right" width="200">Фамилия</td>
+                    <td width="5">:</td>
+                    <td>@Model.LastName</td>
+                </tr>
+                <tr> 
+                    <td align="right" width="200">Имя</td>
+                    <td width="5">:</td>
+                    <td>@Model.FirstName</td>
+                </tr>
+                <tr> 
+                    <td align="right" width="200">Отчество</td>
+                    <td width="5">:</td>
+                    <td>@Model.Patronymic</td>
+                </tr>
+                <tr> 
+                    <td align="right" width="200">Возраст</td>
+                    <td width="5">:</td>
+                    <td>@Model.Age</td>
+                </tr>
+                <tr> 
+                    <td align="right" width="200">Должность</td>
+                    <td width="5">:</td>
+                    <td>@Model.Position</td>
+                </tr>
+                <tr> 
+                    <td align="right" width="200">Дата приема на работу</td>
+                    <td width="5">:</td>
+                    <td>@Model.DateOfEmployment</td>
+                </tr>
+            </table>
         </div>    
     </div>
     <hr/>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">
+        <i class="fa fa-edit"></i>Ред.
+    </a>
     <a asp-action="Index">Назад к списку сотрудников</a>
- 
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
+        <i class="fa fa-trash-o"></i>Удал.
+    </a>
 
  </div>

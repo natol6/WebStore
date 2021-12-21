@@ -8,7 +8,7 @@
     public string Patronymic { get; set; }
     public int Age { get; set; }
     public string Position { get; set; }
-    public DateOnly DateOfEmployment { get; set; }
+    public string DateOfEmployment { get; set; }
 
 }
 
