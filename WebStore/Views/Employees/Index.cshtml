@@ -2,7 +2,12 @@
 
 <div class="container">
     <h2 class="title text-center">Сотрудники</h2>
-    <table class="table">
+    <a class="btn btn-default" asp-action="Edit">Создать</a>
+    <br />
+    <a class="btn btn-default" asp-action="Create">Создать 2</a>
+    @if (Model.Any())
+    {
+        <table class="table">
         <thead>
             <tr>
                 <th></th>
@@ -43,6 +48,12 @@
             }
         </tbody>
     </table>
+    }
+    else
+    {
+        <p>Сотрудников нет...</p>
+    }
+    
     <hr/>
     <a asp-controller="Home" asp-action="Index">На главную</a>
 </div>
