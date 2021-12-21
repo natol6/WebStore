@@ -10,9 +10,11 @@ namespace WebStore.Controllers
     //[Route("Staff/{action=Index}/{Id?}")]
     public class EmployeesController : Controller
     {
+        private readonly ILogger<EmployeesController> _Logger;
         private readonly IEmployeesData _EmployeesData;
-        public EmployeesController(IEmployeesData EmployeesData)
+        public EmployeesController(IEmployeesData EmployeesData, ILogger<EmployeesController> logger)
         {
+            _Logger = logger;
             _EmployeesData = EmployeesData;
         }
         public IActionResult Index()
@@ -40,7 +42,11 @@ namespace WebStore.Controllers
             
             var employee = _EmployeesData.GetById((int)id);
             if (employee == null)
+            {
+                _Logger.LogWarning("Попытка редактирования отсутствующего сотрудника с Id: {0}", id);
                 return NotFound();
+            }
+                
 
             var model = new EmployeeViewModel
             {
@@ -68,10 +74,18 @@ namespace WebStore.Controllers
                 DateOfEmployment = model.DateOfEmployment,
             };
             if(model.Id == 0)
-                _EmployeesData.Add(employee);
-            else if(!_EmployeesData.Edit(employee))
+            {
+                 _EmployeesData.Add(employee);
+                _Logger.LogInformation("Создан новый сотрудник {0} ", employee);
+            }
+                
+            else if (!_EmployeesData.Edit(employee))
+            {
+                _Logger.LogInformation("Неуспешная попытка изменения информации о сотруднике {0} ", employee);
                 return NotFound();
-
+            }
+                
+            _Logger.LogInformation("Изменена информация о сотруднике {0} ", employee);
             return RedirectToAction("Index");
         }
         public IActionResult Delete(int id) 

@@ -6,10 +6,12 @@ namespace WebStore.Services
 {
     public class InMemoryEmployeesData : IEmployeesData
     {
+        private readonly ILogger<InMemoryEmployeesData> _Logger;
         private readonly ICollection<Employee> _Employees;
         private int MaxFreeId;
-        public InMemoryEmployeesData()
+        public InMemoryEmployeesData(ILogger<InMemoryEmployeesData> logger)
         {
+            _Logger = logger;
             _Employees = TestData.Employees;
             MaxFreeId = _Employees.DefaultIfEmpty().Max(e => e?.Id ?? 0) + 1;
         }
@@ -29,8 +31,13 @@ namespace WebStore.Services
         {
             var employee = GetById(id);
             if(employee is null)
+            {
+                _Logger.LogWarning("Попытка удаления отсутствующего сотрудника с Id: {0}", employee.Id);
                 return false;
+            }
+                
             _Employees.Remove(employee);
+            _Logger.LogInformation("Сотрудник Id: {0} был удален", employee.Id);
             return true;
         }
 
@@ -42,13 +49,18 @@ namespace WebStore.Services
                 return true;
             var db_employee = GetById(employee.Id);
             if(db_employee is null)
+            {
+                _Logger.LogWarning("Попытка редактирования отсутствующего сотрудника с Id: {0}", employee.Id);
                 return false;
+            }
+                
             db_employee.FirstName = employee.FirstName;
             db_employee.LastName = employee.LastName;
             db_employee.Patronymic = employee.Patronymic;
             db_employee.Age = employee.Age;
             db_employee.Position = employee.Position;
             db_employee.DateOfEmployment = employee.DateOfEmployment;
+            _Logger.LogInformation("Информация о сотруднике Id: {0} была изменена", employee.Id);
             return true;
         }
 
