@@ -2,26 +2,28 @@
 using WebStore.Models;
 using WebStore.Data;
 using WebStore.ViewModels;
+using WebStore.Services;
+using WebStore.Services.Interfaces;
 
 namespace WebStore.Controllers
 {
     //[Route("Staff/{action=Index}/{Id?}")]
     public class EmployeesController : Controller
     {
-        private readonly ICollection<Employee> __Employees;
-        public EmployeesController()
+        private readonly IEmployeesData _EmployeesData;
+        public EmployeesController(IEmployeesData EmployeesData)
         {
-            __Employees = TestData.Employees;
+            _EmployeesData = EmployeesData;
         }
         public IActionResult Index()
         {
-            var result = __Employees;
+            var result = _EmployeesData.GetAll();
             return View(result);
         }
         
         public IActionResult Details(int id)
         {
-            var employee = __Employees.FirstOrDefault(item => item.Id == id);
+            var employee = _EmployeesData.GetById(id);
             if (employee == null)
                 return NotFound();
             ViewBag.Image = String.Format("{0}.png", employee.Id);
@@ -33,7 +35,7 @@ namespace WebStore.Controllers
         }
         public IActionResult Edit(int id)
         {
-            var employee = __Employees.FirstOrDefault(item => item.Id == id);
+            var employee = _EmployeesData.GetById(id);
             if (employee == null)
                 return NotFound();
 
@@ -49,10 +51,22 @@ namespace WebStore.Controllers
             };
             return View(model);
         }
+        [HttpPost]
         public IActionResult Edit(EmployeeEditViewModel model)
         {
-            // Обработка модели...
-            
+            var employee = new Employee
+            {
+                Id = model.Id,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Patronymic = model.Patronymic,
+                Age = model.Age,
+                Position = model.Position,
+                DateOfEmployment = model.DateOfEmployment,
+            };
+            if(!_EmployeesData.Edit(employee))
+                return NotFound();
+
             return RedirectToAction("Index");
         }
         public IActionResult Delete(int id) 
