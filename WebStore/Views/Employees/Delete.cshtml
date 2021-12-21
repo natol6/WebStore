@@ -1,15 +1,10 @@
-﻿@model WebStore.ViewModels.EmployeeEditViewModel
+﻿@model WebStore.ViewModels.EmployeeViewModel
 
-@{
-    ViewData["Title"] = "Delete";
-}
 
-<h1>Delete</h1>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>EmployeeEditViewModel</h4>
-    <hr />
+<div class="container">
+    <h2 class="title text-center">Удаление сотрудника</h2>
+    <h3>Вы уверены, что хотите удалить выбранного сотрудника?</h3>
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Id)
@@ -50,7 +45,7 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+        <a asp-action="Index">Назад к списку</a>
     </form>
 </div>

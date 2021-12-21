@@ -39,7 +39,7 @@ namespace WebStore.Controllers
             if (employee == null)
                 return NotFound();
 
-            var model = new EmployeeEditViewModel
+            var model = new EmployeeViewModel
             {
                 Id = employee.Id,
                 LastName = employee.LastName,
@@ -52,7 +52,7 @@ namespace WebStore.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult Edit(EmployeeEditViewModel model)
+        public IActionResult Edit(EmployeeViewModel model)
         {
             var employee = new Employee
             {
@@ -71,7 +71,31 @@ namespace WebStore.Controllers
         }
         public IActionResult Delete(int id) 
         { 
-            return View(); 
+            if(id < 0)
+                return BadRequest();
+            var employee = _EmployeesData.GetById(id);
+            if (employee == null)
+                return NotFound();
+            var model = new EmployeeViewModel
+            {
+                Id = employee.Id,
+                LastName = employee.LastName,
+                FirstName = employee.FirstName,
+                Patronymic = employee.Patronymic,
+                Age = employee.Age,
+                Position = employee.Position,
+                DateOfEmployment = employee.DateOfEmployment,
+            };
+            return View(model);
         }
+        [HttpPost]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            if (!_EmployeesData.Delete(id))
+                return NotFound();
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
