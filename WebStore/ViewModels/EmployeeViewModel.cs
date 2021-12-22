@@ -36,6 +36,7 @@ namespace WebStore.ViewModels
         public string Position { get; set; }
         [Display(Name = "Дата приема на работу")]
         [Required(ErrorMessage = "Ввод даты обязателен")]
+        [RegularExpression(@"((0[1-9])|([12][0-9])|(3[01]))[.]((0[1-9])|(1[0-2]))[.](20[0-9][0-9])", ErrorMessage = "Дата должна быть в формате: дд.мм.гггг")]
         public string DateOfEmployment { get; set; }
         
     }
