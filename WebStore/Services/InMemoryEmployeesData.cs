@@ -1,4 +1,4 @@
-﻿using WebStore.Models;
+﻿using WebStore.ViewModels;
 using WebStore.Services.Interfaces;
 using WebStore.Data;
 
@@ -7,7 +7,7 @@ namespace WebStore.Services
     public class InMemoryEmployeesData : IEmployeesData
     {
         private readonly ILogger<InMemoryEmployeesData> _Logger;
-        private readonly ICollection<Employee> _Employees;
+        private readonly ICollection<EmployeeViewModel> _Employees;
         private int MaxFreeId;
         public InMemoryEmployeesData(ILogger<InMemoryEmployeesData> logger)
         {
@@ -15,7 +15,7 @@ namespace WebStore.Services
             _Employees = TestData.Employees;
             MaxFreeId = _Employees.DefaultIfEmpty().Max(e => e?.Id ?? 0) + 1;
         }
-        public int Add(Employee employee)
+        public int Add(EmployeeViewModel employee)
         {
             if(employee is null)
                 throw new ArgumentNullException(nameof(employee));
@@ -41,7 +41,7 @@ namespace WebStore.Services
             return true;
         }
 
-        public bool Edit(Employee employee)
+        public bool Edit(EmployeeViewModel employee)
         {
             if (employee is null)
                 throw new ArgumentNullException(nameof(employee));
@@ -64,10 +64,10 @@ namespace WebStore.Services
             return true;
         }
 
-        public IEnumerable<Employee> GetAll() => _Employees;
+        public IEnumerable<EmployeeViewModel> GetAll() => _Employees;
         
 
-        public Employee? GetById(int id) => _Employees.FirstOrDefault(employee => employee.Id == id);
+        public EmployeeViewModel? GetById(int id) => _Employees.FirstOrDefault(employee => employee.Id == id);
         
     }
 }

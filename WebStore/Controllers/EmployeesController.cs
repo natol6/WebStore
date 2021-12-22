@@ -63,7 +63,7 @@ namespace WebStore.Controllers
         [HttpPost]
         public IActionResult Edit(EmployeeViewModel model)
         {
-            var employee = new Employee
+            var employee = new EmployeeViewModel
             {
                 Id = model.Id,
                 FirstName = model.FirstName,
