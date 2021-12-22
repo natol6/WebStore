@@ -14,11 +14,12 @@ namespace WebStore.Data
         };
         public static List<PositionClass> Positions { get; } = new()
         {
-            new PositionClass { Id = 1, PositionName = "Директор" },
-            new PositionClass { Id = 1, PositionName = "Главный бухгалтер" },
-            new PositionClass { Id = 1, PositionName = "Продавец-консультант" },
-            new PositionClass { Id = 1, PositionName = "Старший продавец-консультант" },
             new PositionClass { Id = 1, PositionName = "Менеджер доставки" },
+            new PositionClass { Id = 2, PositionName = "Продавец-консультант" },
+            new PositionClass { Id = 3, PositionName = "Старший продавец-консультант" },
+            new PositionClass { Id = 4, PositionName = "Главный бухгалтер" },
+            new PositionClass { Id = 5, PositionName = "Директор" },
+       
         };
 
     }
