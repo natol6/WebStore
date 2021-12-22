@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebStore.Models;
 
 namespace WebStore.ViewModels
 {
@@ -24,7 +25,7 @@ namespace WebStore.ViewModels
         public string FirstName { get; set; }
         [Display(Name = "Отчество")]
         [StringLength(50, ErrorMessage = "Длина не должна превышать 50 символов")]
-        [RegularExpression(@"([А-ЯЁ][а-яё]+)|([A-Z][a-z]+)", ErrorMessage = "Ошибка формата")]
+        [RegularExpression(@"(([А-ЯЁ][а-яё]+)|([A-Z][a-z]+))?", ErrorMessage = "Ошибка формата")]
         public string Patronymic { get; set; }
         [Display(Name = "Возраст")]
         [Range(18, 80, ErrorMessage ="Возраст должен быть в пределах 18 - 80 лет")]
@@ -36,5 +37,6 @@ namespace WebStore.ViewModels
         [Display(Name = "Дата приема на работу")]
         [Required(ErrorMessage = "Ввод даты обязателен")]
         public string DateOfEmployment { get; set; }
+        
     }
 }

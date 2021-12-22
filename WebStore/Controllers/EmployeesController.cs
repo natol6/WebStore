@@ -63,6 +63,8 @@ namespace WebStore.Controllers
         [HttpPost]
         public IActionResult Edit(EmployeeViewModel model)
         {
+            if(!ModelState.IsValid)
+                return View(model);
             var employee = new EmployeeViewModel
             {
                 Id = model.Id,
