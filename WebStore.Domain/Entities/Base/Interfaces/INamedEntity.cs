@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebStore.Domain.Entities.Base.Interfaces
 {
-    internal interface INamedEntity : IEntity
+    public interface INamedEntity : IEntity
     {
         string Name { get; }
     }
