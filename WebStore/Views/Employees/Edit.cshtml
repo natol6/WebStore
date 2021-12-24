@@ -1,8 +1,8 @@
 ﻿@model WebStore.ViewModels.EmployeeViewModel
-@using WebStore.Data;
+
 @{
     ViewBag.Title = "Редактирование/добавление сотрудника";
-    var positions = TestData.Positions;
+    
 }
 
 
@@ -40,7 +40,7 @@
                 <label asp-for="Position" class="control-label"></label>
                 @*<input asp-for="Position" class="form-control" />*@
                 <select name="Position">
-                    @foreach(PositionClass pos in positions)
+                    @foreach(PositionClass pos in ViewBag.Positions)
                     {
                         if(pos.PositionName == Model.Position)
                         {

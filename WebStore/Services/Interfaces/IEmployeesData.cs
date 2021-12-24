@@ -1,13 +1,13 @@
-﻿using WebStore.ViewModels;
+﻿using WebStore.Models;
 
 namespace WebStore.Services.Interfaces
 {
     public interface IEmployeesData
     {
-        IEnumerable<EmployeeViewModel> GetAll();
-        EmployeeViewModel? GetById(int id);
-        int Add(EmployeeViewModel employee);
-        bool Edit(EmployeeViewModel employee);
+        IEnumerable<Employee> GetAll();
+        Employee? GetById(int id);
+        int Add(Employee employee);
+        bool Edit(Employee employee);
         bool Delete(int id);
     }
 }
