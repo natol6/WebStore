@@ -1,62 +1,63 @@
 ﻿@model WebStore.ViewModels.EmployeeViewModel
 @{
     ViewBag.Title = "Карточка сотрудника";
+    Layout = "_LayoutContainer";
 }
 
- <div class="container">
-    <h2 class="title text-center">Карточка сотрудника</h2>
-    <div style="display: flex; max-width: 550px; margin: 0 auto" >
-        <div style="object-fit: contain; width: 200px; height: 200px">
-            @*<img src="@String.Format("~/images/photo/{0}.png", Model.Id)" alt="photo">*@
-            <img style="max-height: 100%; width: auto" src="~/images/photos/@ViewBag.Image" alt="photo">
-        </div>
-        <div>
-            <table width="100%" cellspacing="0" cellpadding="4">
-                @*<tr> 
-                    <td align="right" width="200">@Html.DisplayNameFor(m => m.Id)</td>
-                    <td width="5">:</td>
-                    <td>@Html.DisplayFor(model => model.Id)</td>
-                </tr>*@
-                <tr> 
-                    <td align="right" width="200">@Html.DisplayNameFor(m => m.LastName)</td>
-                    <td width="5">:</td>
-                    <td>@Html.DisplayFor(model => model.LastName)</td>
-                </tr>
-                <tr> 
-                    <td align="right" width="200">@Html.DisplayNameFor(m => m.FirstName)</td>
-                    <td width="5">:</td>
-                    <td>@Html.DisplayFor(model => model.FirstName)</td>
-                </tr>
-                <tr> 
-                    <td align="right" width="200">@Html.DisplayNameFor(m => m.Patronymic)</td>
-                    <td width="5">:</td>
-                    <td>@Html.DisplayFor(model => model.Patronymic)</td>
-                </tr>
-                <tr> 
-                    <td align="right" width="200">@Html.DisplayNameFor(m => m.Age)</td>
-                    <td width="5">:</td>
-                    <td>@Html.DisplayFor(model => model.Age)</td>
-                </tr>
-                <tr> 
-                    <td align="right" width="200">@Html.DisplayNameFor(m => m.Position)</td>
-                    <td width="5">:</td>
-                    <td>@Html.DisplayFor(model => model.Position)</td>
-                </tr>
-                <tr> 
-                    <td align="right" width="200">@Html.DisplayNameFor(m => m.DateOfEmployment)</td>
-                    <td width="5">:</td>
-                    <td>@Html.DisplayFor(model => model.DateOfEmployment)</td>
-                </tr>
-            </table>
-        </div>    
-    </div>
-    <hr/>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">
-        <i class="fa fa-edit"></i>Ред.
-    </a>
-    <a asp-action="Index">Назад к списку сотрудников</a>
-    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
-        <i class="fa fa-trash-o"></i>Удал.
-    </a>
 
- </div>
+<h2 class="title text-center">Карточка сотрудника</h2>
+<div style="display: flex; max-width: 550px; margin: 0 auto" >
+    <div style="object-fit: contain; width: 200px; height: 200px">
+        @*<img src="@String.Format("~/images/photo/{0}.png", Model.Id)" alt="photo">*@
+        <img style="max-height: 100%; width: auto" src="~/images/photos/@ViewBag.Image" alt="photo">
+    </div>
+    <div>
+        <table width="100%" cellspacing="0" cellpadding="4">
+            @*<tr> 
+                <td align="right" width="200">@Html.DisplayNameFor(m => m.Id)</td>
+                <td width="5">:</td>
+                <td>@Html.DisplayFor(model => model.Id)</td>
+            </tr>*@
+            <tr> 
+                <td align="right" width="200">@Html.DisplayNameFor(m => m.LastName)</td>
+                <td width="5">:</td>
+                <td>@Html.DisplayFor(model => model.LastName)</td>
+            </tr>
+            <tr> 
+                <td align="right" width="200">@Html.DisplayNameFor(m => m.FirstName)</td>
+                <td width="5">:</td>
+                <td>@Html.DisplayFor(model => model.FirstName)</td>
+            </tr>
+            <tr> 
+                <td align="right" width="200">@Html.DisplayNameFor(m => m.Patronymic)</td>
+                <td width="5">:</td>
+                <td>@Html.DisplayFor(model => model.Patronymic)</td>
+            </tr>
+            <tr> 
+                <td align="right" width="200">@Html.DisplayNameFor(m => m.Age)</td>
+                <td width="5">:</td>
+                <td>@Html.DisplayFor(model => model.Age)</td>
+            </tr>
+            <tr> 
+                <td align="right" width="200">@Html.DisplayNameFor(m => m.Position)</td>
+                <td width="5">:</td>
+                <td>@Html.DisplayFor(model => model.Position)</td>
+            </tr>
+            <tr> 
+                <td align="right" width="200">@Html.DisplayNameFor(m => m.DateOfEmployment)</td>
+                <td width="5">:</td>
+                <td>@Html.DisplayFor(model => model.DateOfEmployment)</td>
+            </tr>
+        </table>
+    </div>    
+</div>
+<hr/>
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">
+    <i class="fa fa-edit"></i>Ред.
+</a>
+<a asp-action="Index">Назад к списку сотрудников</a>
+<a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
+    <i class="fa fa-trash-o"></i>Удал.
+</a>
+
+ 
