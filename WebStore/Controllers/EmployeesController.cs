@@ -57,11 +57,13 @@ namespace WebStore.Controllers
         }
         public IActionResult Create()
         {
+            ViewBag.Positions = TestData.Positions;
             return View("Edit", new EmployeeViewModel());
         }
         public IActionResult Edit(int? id)
         {
-            if(id == null)
+            ViewBag.Positions = TestData.Positions;
+            if (id == null)
                 return View(new EmployeeViewModel());
             
             var employee = _EmployeesData.GetById((int)id);
@@ -82,7 +84,6 @@ namespace WebStore.Controllers
                 Position = employee.Position,
                 DateOfEmployment = employee.DateOfEmployment,
             };
-            ViewBag.Positions = TestData.Positions;
             return View(model);
         }
         [HttpPost]

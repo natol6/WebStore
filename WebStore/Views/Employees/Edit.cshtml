@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Редактирование/добавление сотрудника";
-    
+    var positions = ViewBag.Positions;
 }
 
 <div class="container">
@@ -39,9 +39,9 @@
                 <label asp-for="Position" class="control-label"></label>
                 @*<input asp-for="Position" class="form-control" />*@
                 <select name="Position">
-                    @foreach(PositionClass pos in ViewBag.Positions)
+                    @foreach(var pos in positions)
                     {
-                        if(pos.PositionName == Model.Position)
+                        if(Model.Position != null && pos.PositionName == Model.Position)
                         {
                             <option selected>@pos.PositionName</option>
                         }
