@@ -19,7 +19,21 @@ namespace WebStore.Controllers
         }
         public IActionResult Index()
         {
-            var result = _EmployeesData.GetAll();
+            var employees = _EmployeesData.GetAll();
+             var result = new List<EmployeeViewModel>();
+            foreach(var empl in employees)
+            {
+                result.Add(new EmployeeViewModel
+                {
+                    Id = empl.Id,
+                    LastName = empl.LastName,
+                    FirstName = empl.FirstName,
+                    Patronymic = empl.Patronymic,
+                    Age = empl.Age,
+                    Position = empl.Position,
+                    DateOfEmployment = empl.DateOfEmployment,
+                });
+            }
             return View(result);
         }
         
@@ -29,15 +43,27 @@ namespace WebStore.Controllers
             if (employee == null)
                 return NotFound();
             ViewBag.Image = String.Format("{0}.png", employee.Id);
-            return View(employee);
+            var model = new EmployeeViewModel
+                 {
+                    Id = employee.Id,
+                    LastName = employee.LastName,
+                    FirstName = employee.FirstName,
+                    Patronymic = employee.Patronymic,
+                    Age = employee.Age,
+                    Position = employee.Position,
+                    DateOfEmployment = employee.DateOfEmployment,
+                };
+            return View(model);
         }
         public IActionResult Create()
         {
+            ViewBag.Positions = TestData.Positions;
             return View("Edit", new EmployeeViewModel());
         }
         public IActionResult Edit(int? id)
         {
-            if(id == null)
+            ViewBag.Positions = TestData.Positions;
+            if (id == null)
                 return View(new EmployeeViewModel());
             
             var employee = _EmployeesData.GetById((int)id);
@@ -63,6 +89,8 @@ namespace WebStore.Controllers
         [HttpPost]
         public IActionResult Edit(EmployeeViewModel model)
         {
+            if(!ModelState.IsValid)
+                return View(model);
             var employee = new Employee
             {
                 Id = model.Id,
