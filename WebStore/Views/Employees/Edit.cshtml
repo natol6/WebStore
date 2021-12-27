@@ -41,13 +41,13 @@
                 <select name="Position">
                     @foreach(var pos in positions)
                     {
-                        if(Model.Position != null && pos.PositionName == Model.Position)
+                        if(Model.Position != null && pos == Model.Position)
                         {
-                            <option selected>@pos.PositionName</option>
+                            <option selected>@pos</option>
                         }
                         else
                         {
-                            <option>@pos.PositionName</option>
+                            <option>@pos</option>
                         }
                     }
     

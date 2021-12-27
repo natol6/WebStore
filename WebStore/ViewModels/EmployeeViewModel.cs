@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebStore.Models;
+using WebStore.Domain.People;
 
 namespace WebStore.ViewModels
 {
@@ -35,9 +35,10 @@ namespace WebStore.ViewModels
         
         public string Position { get; set; }
         [Display(Name = "Дата приема на работу")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.MM.yyyy}")]
         [Required(ErrorMessage = "Ввод даты обязателен")]
         [RegularExpression(@"((0[1-9])|([12][0-9])|(3[01]))[.]((0[1-9])|(1[0-2]))[.](20[0-9][0-9])", ErrorMessage = "Дата должна быть в формате: дд.мм.гггг")]
-        public string DateOfEmployment { get; set; }
+        public DateOnly DateOfEmployment { get; set; } = DateOnly.FromDateTime(DateTime.Now);
         
     }
 }

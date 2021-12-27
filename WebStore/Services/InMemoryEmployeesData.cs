@@ -1,4 +1,4 @@
-﻿using WebStore.Models;
+﻿using WebStore.Domain.People;
 using WebStore.Services.Interfaces;
 using WebStore.Data;
 

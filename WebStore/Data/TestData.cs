@@ -1,6 +1,7 @@
 ﻿using WebStore.ViewModels;
-using WebStore.Models;
+using WebStore.Domain.People;
 using WebStore.Domain.Entities;
+using WebStore.Domain.References;
 
 namespace WebStore.Data
 {
@@ -8,10 +9,10 @@ namespace WebStore.Data
     {
         public static List<Employee> Employees { get; } = new()
         {
-            new Employee { Id = 1, LastName = "Иванов", FirstName = "Иван", Patronymic = "Иванович", Age = 28, Position = "Старший продавец-консультант", DateOfEmployment = "15.06.2019" },
-            new Employee { Id = 2, LastName = "Петров", FirstName = "Петр", Patronymic = "Петрович", Age = 23, Position = "Главный бухгалтер", DateOfEmployment = "28.10.2018" },
-            new Employee { Id = 3, LastName = "Баширов", FirstName = "Руслан", Patronymic = "Михайлович", Age = 32, Position = "Директор", DateOfEmployment = "03.03.2017" },
-            new Employee { Id = 4, LastName = "Сидоров", FirstName = "Сидор", Patronymic = "Сидорович", Age = 18, Position = "Продавец-консультант", DateOfEmployment = "25.11.2020" },
+            new Employee { Id = 1, LastName = "Иванов", FirstName = "Иван", Patronymic = "Иванович", Age = 28, Position = new PositionClass { Id = 3, PositionName = "Старший продавец-консультант" }, DateOfEmployment = new DateOnly(2019, 06, 15) },
+            new Employee { Id = 2, LastName = "Петров", FirstName = "Петр", Patronymic = "Петрович", Age = 23, Position = new PositionClass { Id = 4, PositionName = "Главный бухгалтер" }, DateOfEmployment = new DateOnly(2018, 10, 28) },
+            new Employee { Id = 3, LastName = "Баширов", FirstName = "Руслан", Patronymic = "Михайлович", Age = 32, Position = new PositionClass { Id = 5, PositionName = "Директор" }, DateOfEmployment = new DateOnly(2017, 03, 03) },
+            new Employee { Id = 4, LastName = "Сидоров", FirstName = "Сидор", Patronymic = "Сидорович", Age = 18, Position = new PositionClass { Id = 2, PositionName = "Продавец-консультант" }, DateOfEmployment = new DateOnly(2020, 11, 25) },
         };
         public static List<PositionClass> Positions { get; } = new()
         {

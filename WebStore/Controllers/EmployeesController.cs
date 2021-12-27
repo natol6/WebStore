@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebStore.Models;
+using WebStore.Domain.People;
+using WebStore.Domain.References;
 using WebStore.Data;
 using WebStore.ViewModels;
 using WebStore.Services;
@@ -12,10 +13,12 @@ namespace WebStore.Controllers
     {
         private readonly ILogger<EmployeesController> _Logger;
         private readonly IEmployeesData _EmployeesData;
-        public EmployeesController(IEmployeesData EmployeesData, ILogger<EmployeesController> logger)
+        private readonly IPositionsData _Positions;
+        public EmployeesController(IEmployeesData EmployeesData, IPositionsData positions, ILogger<EmployeesController> logger)
         {
             _Logger = logger;
             _EmployeesData = EmployeesData;
+            _Positions = positions;
         }
         public IActionResult Index()
         {
@@ -30,7 +33,7 @@ namespace WebStore.Controllers
                     FirstName = empl.FirstName,
                     Patronymic = empl.Patronymic,
                     Age = empl.Age,
-                    Position = empl.Position,
+                    Position = empl.Position.PositionName,
                     DateOfEmployment = empl.DateOfEmployment,
                 });
             }
@@ -50,19 +53,29 @@ namespace WebStore.Controllers
                     FirstName = employee.FirstName,
                     Patronymic = employee.Patronymic,
                     Age = employee.Age,
-                    Position = employee.Position,
+                    Position = employee.Position.PositionName,
                     DateOfEmployment = employee.DateOfEmployment,
                 };
             return View(model);
         }
         public IActionResult Create()
         {
-            ViewBag.Positions = TestData.Positions;
+            var positions = new List<string>();
+            foreach (var position in _Positions.GetAll())
+            {
+                positions.Add(position.PositionName);
+            };
+            ViewBag.Positions = positions;
             return View("Edit", new EmployeeViewModel());
         }
         public IActionResult Edit(int? id)
         {
-            ViewBag.Positions = TestData.Positions;
+            var positions = new List<string>();
+            foreach (var position in _Positions.GetAll())
+            {
+                positions.Add(position.PositionName);
+            };
+            ViewBag.Positions = positions;
             if (id == null)
                 return View(new EmployeeViewModel());
             
@@ -81,7 +94,7 @@ namespace WebStore.Controllers
                 FirstName = employee.FirstName,
                 Patronymic = employee.Patronymic,
                 Age = employee.Age,
-                Position = employee.Position,
+                Position = employee.Position.PositionName,
                 DateOfEmployment = employee.DateOfEmployment,
             };
             return View(model);
@@ -89,8 +102,15 @@ namespace WebStore.Controllers
         [HttpPost]
         public IActionResult Edit(EmployeeViewModel model)
         {
-            if(!ModelState.IsValid)
+            var positions = new List<string>();
+            foreach (var pos in _Positions.GetAll())
+            {
+                positions.Add(pos.PositionName);
+            };
+            ViewBag.Positions = positions;
+            if (!ModelState.IsValid)
                 return View(model);
+            var position = _Positions.GetByName(model.Position);
             var employee = new Employee
             {
                 Id = model.Id,
@@ -98,7 +118,7 @@ namespace WebStore.Controllers
                 LastName = model.LastName,
                 Patronymic = model.Patronymic,
                 Age = model.Age,
-                Position = model.Position,
+                Position = position,
                 DateOfEmployment = model.DateOfEmployment,
             };
             if(model.Id == 0)
@@ -130,7 +150,7 @@ namespace WebStore.Controllers
                 FirstName = employee.FirstName,
                 Patronymic = employee.Patronymic,
                 Age = employee.Age,
-                Position = employee.Position,
+                Position = employee.Position.PositionName,
                 DateOfEmployment = employee.DateOfEmployment,
             };
             return View(model);
