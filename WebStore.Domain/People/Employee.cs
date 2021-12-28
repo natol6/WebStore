@@ -1,4 +1,5 @@
-﻿using WebStore.Domain.People.Base;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using WebStore.Domain.People.Base;
 using WebStore.Domain.References;
 
 namespace WebStore.Domain.People;
