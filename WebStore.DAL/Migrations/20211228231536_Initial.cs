@@ -53,8 +53,7 @@ namespace WebStore.DAL.Migrations
                         name: "FK_Sections_Sections_ParentId",
                         column: x => x.ParentId,
                         principalTable: "Sections",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -89,8 +88,8 @@ namespace WebStore.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Order = table.Column<int>(type: "int", nullable: false),
                     SectionId = table.Column<int>(type: "int", nullable: false),
-                    BrandId = table.Column<int>(type: "int", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BrandId = table.Column<int>(type: "int", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -101,8 +100,7 @@ namespace WebStore.DAL.Migrations
                         name: "FK_Products_Brands_BrandId",
                         column: x => x.BrandId,
                         principalTable: "Brands",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Products_Sections_SectionId",
                         column: x => x.SectionId,
@@ -114,7 +112,8 @@ namespace WebStore.DAL.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Brands_Name",
                 table: "Brands",
-                column: "Name");
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_PositionId",
@@ -139,7 +138,8 @@ namespace WebStore.DAL.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Sections_Name",
                 table: "Sections",
-                column: "Name");
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sections_ParentId",
