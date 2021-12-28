@@ -15,8 +15,8 @@ namespace WebStore.Domain.Entities
     {
         public int Order { get; set; }
         public Section Section { get; set; }
-        public Brand Brand { get; set; }
-        public string ImageUrl { get; set; } 
+        public Brand? Brand { get; set; }
+        public string? ImageUrl { get; set; } 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
     }

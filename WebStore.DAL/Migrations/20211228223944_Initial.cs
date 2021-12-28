@@ -43,7 +43,7 @@ namespace WebStore.DAL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Order = table.Column<int>(type: "int", nullable: false),
-                    ParentId = table.Column<int>(type: "int", nullable: false),
+                    ParentId = table.Column<int>(type: "int", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>

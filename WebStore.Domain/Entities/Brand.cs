@@ -9,10 +9,10 @@ using WebStore.Domain.Entities.Base.Interfaces;
 
 namespace WebStore.Domain.Entities
 {
-    [Index(nameof(Name))]
+    [Index(nameof(Name), IsUnique = true)]
     public class Brand : NamedEntity, IOrderedEntity
     {
         public int Order { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public ICollection<Product>? Products { get; set; }
     }
 }

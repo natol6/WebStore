@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebStore.Domain.Entities
 {
-    [Index(nameof(Name))]
+    [Index(nameof(Name), IsUnique = true)]
     public class Section : NamedEntity, IOrderedEntity
     {
         public int Order { get; set; }
-        public Section Parent { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public Section? Parent { get; set; }
+        public ICollection<Product>? Products { get; set; }
     }
 }
