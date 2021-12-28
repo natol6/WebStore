@@ -32,4 +32,6 @@
     <ProjectReference Include="..\WebStore.Domain\WebStore.Domain.csproj" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="Store" /></VisualStudio></ProjectExtensions>
+
 </Project>
