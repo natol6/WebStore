@@ -9,10 +9,10 @@ namespace WebStore.Data
     {
         public static List<Employee> Employees { get; } = new()
         {
-            new Employee { Id = 1, LastName = "Иванов", FirstName = "Иван", Patronymic = "Иванович", Age = 28, Position = new PositionClass { Id = 3, PositionName = "Старший продавец-консультант" }, DateOfEmployment = new DateOnly(2019, 06, 15) },
-            new Employee { Id = 2, LastName = "Петров", FirstName = "Петр", Patronymic = "Петрович", Age = 23, Position = new PositionClass { Id = 4, PositionName = "Главный бухгалтер" }, DateOfEmployment = new DateOnly(2018, 10, 28) },
-            new Employee { Id = 3, LastName = "Баширов", FirstName = "Руслан", Patronymic = "Михайлович", Age = 32, Position = new PositionClass { Id = 5, PositionName = "Директор" }, DateOfEmployment = new DateOnly(2017, 03, 03) },
-            new Employee { Id = 4, LastName = "Сидоров", FirstName = "Сидор", Patronymic = "Сидорович", Age = 18, Position = new PositionClass { Id = 2, PositionName = "Продавец-консультант" }, DateOfEmployment = new DateOnly(2020, 11, 25) },
+            new Employee { Id = 1, LastName = "Иванов", FirstName = "Иван", Patronymic = "Иванович", Age = 28, Position = new PositionClass { Id = 3, PositionName = "Старший продавец-консультант" }, DateOfEmployment = new DateTime(2019, 06, 15) },
+            new Employee { Id = 2, LastName = "Петров", FirstName = "Петр", Patronymic = "Петрович", Age = 23, Position = new PositionClass { Id = 4, PositionName = "Главный бухгалтер" }, DateOfEmployment = new DateTime(2018, 10, 28) },
+            new Employee { Id = 3, LastName = "Баширов", FirstName = "Руслан", Patronymic = "Михайлович", Age = 32, Position = new PositionClass { Id = 5, PositionName = "Директор" }, DateOfEmployment = new DateTime(2017, 03, 03) },
+            new Employee { Id = 4, LastName = "Сидоров", FirstName = "Сидор", Patronymic = "Сидорович", Age = 18, Position = new PositionClass { Id = 2, PositionName = "Продавец-консультант" }, DateOfEmployment = new DateTime(2020, 11, 25) },
         };
         public static List<PositionClass> Positions { get; } = new()
         {
