@@ -33,7 +33,7 @@ namespace WebStore.Controllers
                     FirstName = empl.FirstName,
                     Patronymic = empl.Patronymic,
                     Age = empl.Age,
-                    Position = empl.Position.PositionName,
+                    Position = empl.Position.Name,
                     DateOfEmployment = empl.DateOfEmployment,
                 });
             }
@@ -53,7 +53,7 @@ namespace WebStore.Controllers
                     FirstName = employee.FirstName,
                     Patronymic = employee.Patronymic,
                     Age = employee.Age,
-                    Position = employee.Position.PositionName,
+                    Position = employee.Position.Name,
                     DateOfEmployment = employee.DateOfEmployment,
                 };
             return View(model);
@@ -63,7 +63,7 @@ namespace WebStore.Controllers
             var positions = new List<string>();
             foreach (var position in _Positions.GetAll())
             {
-                positions.Add(position.PositionName);
+                positions.Add(position.Name);
             };
             ViewBag.Positions = positions;
             return View("Edit", new EmployeeViewModel());
@@ -73,7 +73,7 @@ namespace WebStore.Controllers
             var positions = new List<string>();
             foreach (var position in _Positions.GetAll())
             {
-                positions.Add(position.PositionName);
+                positions.Add(position.Name);
             };
             ViewBag.Positions = positions;
             if (id == null)
@@ -94,7 +94,7 @@ namespace WebStore.Controllers
                 FirstName = employee.FirstName,
                 Patronymic = employee.Patronymic,
                 Age = employee.Age,
-                Position = employee.Position.PositionName,
+                Position = employee.Position.Name,
                 DateOfEmployment = employee.DateOfEmployment,
             };
             return View(model);
@@ -105,7 +105,7 @@ namespace WebStore.Controllers
             var positions = new List<string>();
             foreach (var pos in _Positions.GetAll())
             {
-                positions.Add(pos.PositionName);
+                positions.Add(pos.Name);
             };
             ViewBag.Positions = positions;
             if (!ModelState.IsValid)
@@ -150,7 +150,7 @@ namespace WebStore.Controllers
                 FirstName = employee.FirstName,
                 Patronymic = employee.Patronymic,
                 Age = employee.Age,
-                Position = employee.Position.PositionName,
+                Position = employee.Position.Name,
                 DateOfEmployment = employee.DateOfEmployment,
             };
             return View(model);

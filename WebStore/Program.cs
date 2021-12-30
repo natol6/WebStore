@@ -16,11 +16,18 @@ services.AddControllersWithViews(opt =>
 });
 
 services.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
+services.AddTransient<IDbInitializer, DbInitializer>();
 services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
 services.AddSingleton<IProductData, InMemoryProductData>();
 services.AddSingleton<IPositionsData, InMemoryPositionsData>();
 
 var app = builder.Build();
+
+await using (var scope = app.Services.CreateAsyncScope())
+{
+    var db_initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+    await db_initializer.InitializeAsync();
+}
 
 if (app.Environment.IsDevelopment())
 {

@@ -59,36 +59,36 @@ namespace WebStore.Services
             
             _logger.LogInformation("Инициализация тестовых данных о товарах ...");
 
-            var sections_pool = TestData.Sections;
-            var brands_pool = TestData.Brands;
-            var products_pool = TestData.Products;
-            foreach(var section in sections_pool)
+            var sections_pool = TestData.Sections.ToDictionary(s => s.Id);
+            var brands_pool = TestData.Brands.ToDictionary(b => b.Id);
+
+            foreach (var child_section in TestData.Sections.Where(s => s.ParentId is not null))
+                child_section.Parent = sections_pool[(int)child_section.ParentId!];
+
+            foreach (var product in TestData.Products)
+            {
+                product.Section = sections_pool[product.SectionId];
+                if (product.BrandId is { } brand_id)
+                    product.Brand = brands_pool[brand_id];
+
+                product.Id = 0;
+                product.SectionId = 0;
+                product.BrandId = null;
+            }
+
+            foreach (var section in TestData.Sections)
             {
                 section.Id = 0;
-                if(section.Parent is not null)
-                    section.Parent.Id = 0;
-            }
-            foreach (var brand in brands_pool)
-            {
-                brand.Id = 0;
-            }
-            foreach (var product in products_pool)
-            {
-                product.Id = 0;
-                product.Section.Id = 0;
-                if(product.Section.Parent is not null)
-                    product.Section.Parent.Id = 0;
-                if (product.Brand is not null)
-                    product.Brand.Id = 0;
-                
+                section.ParentId = null;
             }
 
+            foreach (var brand in TestData.Brands)
+                brand.Id = 0;
             await using (await _db.Database.BeginTransactionAsync(Cancel))
             {
-                await _db.Sections.AddRangeAsync(sections_pool, Cancel);
-                await _db.Brands.AddRangeAsync(brands_pool, Cancel);
-                await _db.Products.AddRangeAsync(products_pool, Cancel);
-
+                await _db.Sections.AddRangeAsync(TestData.Sections, Cancel);
+                await _db.Brands.AddRangeAsync(TestData.Brands, Cancel);
+                await _db.Products.AddRangeAsync(TestData.Products, Cancel);
                 await _db.SaveChangesAsync(Cancel);
 
                 await _db.Database.CommitTransactionAsync(Cancel);
@@ -104,22 +104,26 @@ namespace WebStore.Services
             }
 
             _logger.LogInformation("Инициализация сотрудников...");
-            var employees_pool = TestData.Employees;
-            var positions_pool = TestData.Positions;
-            foreach (var employee in employees_pool)
+            
+            var positions_pool = TestData.Positions.ToDictionary(s => s.Id);
+            
+            foreach (var employee in TestData.Employees)
             {
+                employee.Position = positions_pool[employee.PositionId];
+                
                 employee.Id = 0;
-                employee.Position.Id = 0;
+                employee.PositionId = 0;
             }
-            foreach (var position in positions_pool)
+
+            foreach (var position in TestData.Positions)
             {
                 position.Id = 0;
             }
 
             await using var transaction = await _db.Database.BeginTransactionAsync(Cancel);
 
-            await _db.Positions.AddRangeAsync(positions_pool, Cancel);
-            await _db.Employees.AddRangeAsync(employees_pool, Cancel);
+            await _db.Positions.AddRangeAsync(TestData.Positions, Cancel);
+            await _db.Employees.AddRangeAsync(TestData.Employees, Cancel);
 
             await _db.SaveChangesAsync(Cancel);
 

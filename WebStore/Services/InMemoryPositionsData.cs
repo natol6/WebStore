@@ -54,7 +54,7 @@ namespace WebStore.Services
                 return false;
             }
                 
-            db_position.PositionName = position.PositionName;
+            db_position.Name = position.Name;
             _Logger.LogInformation("Информация о должности сотрудника Id: {0} была изменена", position.Id);
             return true;
         }
@@ -64,6 +64,6 @@ namespace WebStore.Services
 
         public PositionClass? GetById(int id) => _Positions.FirstOrDefault(position => position.Id == id);
 
-        public PositionClass? GetByName(string name) => _Positions.FirstOrDefault(position => position.PositionName == name);
+        public PositionClass? GetByName(string name) => _Positions.FirstOrDefault(position => position.Name == name);
     }
 }
