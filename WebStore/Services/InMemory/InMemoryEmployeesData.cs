@@ -1,18 +1,21 @@
 ﻿using WebStore.Domain.People;
 using WebStore.Services.Interfaces;
 using WebStore.Data;
+using WebStore.Domain.References;
 
-namespace WebStore.Services
+namespace WebStore.Services.InMemory
 {
     public class InMemoryEmployeesData : IEmployeesData
     {
         private readonly ILogger<InMemoryEmployeesData> _Logger;
         private readonly ICollection<Employee> _Employees;
+        private readonly ICollection<PositionClass> _Positions;
         private int MaxFreeId;
         public InMemoryEmployeesData(ILogger<InMemoryEmployeesData> logger)
         {
             _Logger = logger;
             _Employees = TestData.Employees;
+            _Positions = TestData.Positions;
             MaxFreeId = _Employees.DefaultIfEmpty().Max(e => e?.Id ?? 0) + 1;
         }
         public int Add(Employee employee)
@@ -65,9 +68,10 @@ namespace WebStore.Services
         }
 
         public IEnumerable<Employee> GetAll() => _Employees;
-        
 
+        public IEnumerable<PositionClass> GetAllPositions() => _Positions;
         public Employee? GetById(int id) => _Employees.FirstOrDefault(employee => employee.Id == id);
-        
+        public PositionClass? GetByIdPosition(int id) => _Positions.FirstOrDefault(p => p.Id == id);
+        public PositionClass? GetByNamePosition(string name) => _Positions.FirstOrDefault(p => p.Name == name);
     }
 }

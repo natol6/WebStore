@@ -9,7 +9,7 @@ namespace WebStore.Domain
 {
     public class ProductFilter
     {
-        public Section? Section { get; set; }
-        public Brand? Brand { get; set; }
+        public int? SectionId { get; set; }
+        public int? BrandId { get; set; }
     }
 }

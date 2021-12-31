@@ -9,8 +9,8 @@ namespace WebStore.ViewModels
 {
     public class CatalogViewModel
     {
-        public Brand? Brand { get; set; }
-        public Section? Section { get; set; }
+        public int? BrandId { get; set; }
+        public int? SectionId { get; set; }
         public IEnumerable<ProductViewModel> Products { get; set; } = null!;
     }
 }

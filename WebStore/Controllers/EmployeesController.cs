@@ -13,31 +13,33 @@ namespace WebStore.Controllers
     {
         private readonly ILogger<EmployeesController> _Logger;
         private readonly IEmployeesData _EmployeesData;
-        private readonly IPositionsData _Positions;
-        public EmployeesController(IEmployeesData EmployeesData, IPositionsData positions, ILogger<EmployeesController> logger)
+        public EmployeesController(IEmployeesData EmployeesData, ILogger<EmployeesController> logger)
         {
             _Logger = logger;
             _EmployeesData = EmployeesData;
-            _Positions = positions;
         }
         public IActionResult Index()
         {
             var employees = _EmployeesData.GetAll();
-             var result = new List<EmployeeViewModel>();
-            foreach(var empl in employees)
+            var positions = _EmployeesData.GetAllPositions();
+            var employees_view = new List<EmployeeViewModel>();
+            foreach (var employee in employees)
             {
-                result.Add(new EmployeeViewModel
-                {
-                    Id = empl.Id,
-                    LastName = empl.LastName,
-                    FirstName = empl.FirstName,
-                    Patronymic = empl.Patronymic,
-                    Age = empl.Age,
-                    Position = empl.Position.Name,
-                    DateOfEmployment = empl.DateOfEmployment,
-                });
+                //var position = positions.FirstOrDefault(p => p.Id == employee.PositionId);
+                var position = _EmployeesData.GetByIdPosition(employee.PositionId);
+                var employee_view = new EmployeeViewModel
+                    {
+                    Id = employee.Id,
+                    LastName = employee.LastName,
+                    FirstName = employee.FirstName,
+                    Patronymic = employee.Patronymic,
+                    Age = employee.Age,
+                    Position = position.Name,
+                    DateOfEmployment = employee.DateOfEmployment,
+                    };
+                employees_view.Add(employee_view);
             }
-            return View(result);
+            return View(employees_view);
         }
         
         public IActionResult Details(int id)
@@ -45,6 +47,7 @@ namespace WebStore.Controllers
             var employee = _EmployeesData.GetById(id);
             if (employee == null)
                 return NotFound();
+            var position = _EmployeesData.GetByIdPosition(employee.PositionId);
             ViewBag.Image = String.Format("{0}.png", employee.Id);
             var model = new EmployeeViewModel
                  {
@@ -53,29 +56,19 @@ namespace WebStore.Controllers
                     FirstName = employee.FirstName,
                     Patronymic = employee.Patronymic,
                     Age = employee.Age,
-                    Position = employee.Position.Name,
+                    Position = position.Name,
                     DateOfEmployment = employee.DateOfEmployment,
                 };
             return View(model);
         }
         public IActionResult Create()
         {
-            var positions = new List<string>();
-            foreach (var position in _Positions.GetAll())
-            {
-                positions.Add(position.Name);
-            };
-            ViewBag.Positions = positions;
+            ViewBag.Positions = GetPositionsView();
             return View("Edit", new EmployeeViewModel());
         }
         public IActionResult Edit(int? id)
         {
-            var positions = new List<string>();
-            foreach (var position in _Positions.GetAll())
-            {
-                positions.Add(position.Name);
-            };
-            ViewBag.Positions = positions;
+            ViewBag.Positions = GetPositionsView();
             if (id == null)
                 return View(new EmployeeViewModel());
             
@@ -85,7 +78,7 @@ namespace WebStore.Controllers
                 _Logger.LogWarning("Попытка редактирования отсутствующего сотрудника с Id: {0}", id);
                 return NotFound();
             }
-                
+            var position = _EmployeesData.GetByIdPosition(employee.PositionId);
 
             var model = new EmployeeViewModel
             {
@@ -94,7 +87,7 @@ namespace WebStore.Controllers
                 FirstName = employee.FirstName,
                 Patronymic = employee.Patronymic,
                 Age = employee.Age,
-                Position = employee.Position.Name,
+                Position = position.Name,
                 DateOfEmployment = employee.DateOfEmployment,
             };
             return View(model);
@@ -102,15 +95,10 @@ namespace WebStore.Controllers
         [HttpPost]
         public IActionResult Edit(EmployeeViewModel model)
         {
-            var positions = new List<string>();
-            foreach (var pos in _Positions.GetAll())
-            {
-                positions.Add(pos.Name);
-            };
-            ViewBag.Positions = positions;
+            ViewBag.Positions = GetPositionsView();
             if (!ModelState.IsValid)
                 return View(model);
-            var position = _Positions.GetByName(model.Position);
+            var position = _EmployeesData.GetByNamePosition(model.Position);
             var employee = new Employee
             {
                 Id = model.Id,
@@ -118,13 +106,13 @@ namespace WebStore.Controllers
                 LastName = model.LastName,
                 Patronymic = model.Patronymic,
                 Age = model.Age,
-                Position = position,
+                PositionId = position.Id,
                 DateOfEmployment = model.DateOfEmployment,
             };
             if(model.Id == 0)
             {
-                 _EmployeesData.Add(employee);
-                _Logger.LogInformation("Создан новый сотрудник {0} ", employee);
+                 var id = _EmployeesData.Add(employee);
+                _Logger.LogInformation("Создан новый сотрудник {0} ", id);
             }
                 
             else if (!_EmployeesData.Edit(employee))
@@ -143,6 +131,7 @@ namespace WebStore.Controllers
             var employee = _EmployeesData.GetById(id);
             if (employee == null)
                 return NotFound();
+            var position = _EmployeesData.GetByIdPosition(employee.PositionId);
             var model = new EmployeeViewModel
             {
                 Id = employee.Id,
@@ -150,7 +139,7 @@ namespace WebStore.Controllers
                 FirstName = employee.FirstName,
                 Patronymic = employee.Patronymic,
                 Age = employee.Age,
-                Position = employee.Position.Name,
+                Position = position.Name,
                 DateOfEmployment = employee.DateOfEmployment,
             };
             return View(model);
@@ -166,6 +155,16 @@ namespace WebStore.Controllers
 
             _Logger.LogInformation("Удален сотрудник Id: {0} ", id);
             return RedirectToAction("Index");
+        }
+        private List<string> GetPositionsView()
+        {
+            var positions = _EmployeesData.GetAllPositions();
+            var positions_view = new List<string>();
+            foreach (var position in positions)
+            {
+                positions_view.Add(position.Name);
+            };
+            return positions_view;
         }
 
     }

@@ -2,7 +2,7 @@
 using WebStore.Services.Interfaces;
 using WebStore.Data;
 
-namespace WebStore.Services
+namespace WebStore.Services.InMemory
 {
     public class InMemoryPositionsData : IPositionsData
     {
@@ -64,6 +64,7 @@ namespace WebStore.Services
 
         public PositionClass? GetById(int id) => _Positions.FirstOrDefault(position => position.Id == id);
 
-        public PositionClass? GetByName(string name) => _Positions.FirstOrDefault(position => position.Name == name);
+        //public PositionClass? GetByName(string name) => _Positions.FirstOrDefault(position => position.Name == name);
+        //public string GetName(int id) => _Positions.FirstOrDefault(p => p.Id == id).Name;
     }
 }

@@ -16,18 +16,18 @@ namespace WebStore.Controllers
         private readonly IProductData _ProductData;
         public CatalogController(IProductData ProductData) => _ProductData = ProductData;
         
-        public IActionResult Index(Brand? brand, Section? section) 
+        public IActionResult Index(int? brandId, int? sectionId) 
         {
             var filter = new ProductFilter
             {
-                Brand = brand,
-                Section = section,
+                BrandId = brandId,
+                SectionId = sectionId,
             };
             var products = _ProductData.GetProducts(filter);
             var catalog_model = new CatalogViewModel
             {
-                Brand = brand,
-                Section = section,
+                BrandId = brandId,
+                SectionId = sectionId,
                 Products = products.OrderBy(p => p.Order).Select(p => new ProductViewModel
                 {
                     Id = p.Id,
