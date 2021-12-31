@@ -1,6 +1,7 @@
 ﻿using WebStore.ViewModels;
-using WebStore.Models;
+using WebStore.Domain.People;
 using WebStore.Domain.Entities;
+using WebStore.Domain.References;
 
 namespace WebStore.Data
 {
@@ -8,31 +9,31 @@ namespace WebStore.Data
     {
         public static List<Employee> Employees { get; } = new()
         {
-            new Employee { Id = 1, LastName = "Иванов", FirstName = "Иван", Patronymic = "Иванович", Age = 28, Position = "Старший продавец-консультант", DateOfEmployment = "15.06.2019" },
-            new Employee { Id = 2, LastName = "Петров", FirstName = "Петр", Patronymic = "Петрович", Age = 23, Position = "Главный бухгалтер", DateOfEmployment = "28.10.2018" },
-            new Employee { Id = 3, LastName = "Баширов", FirstName = "Руслан", Patronymic = "Михайлович", Age = 32, Position = "Директор", DateOfEmployment = "03.03.2017" },
-            new Employee { Id = 4, LastName = "Сидоров", FirstName = "Сидор", Patronymic = "Сидорович", Age = 18, Position = "Продавец-консультант", DateOfEmployment = "25.11.2020" },
+            new Employee { Id = 1, LastName = "Иванов", FirstName = "Иван", Patronymic = "Иванович", Age = 28, PositionId = 3, DateOfEmployment = new DateTime(2019, 06, 15) },
+            new Employee { Id = 2, LastName = "Петров", FirstName = "Петр", Patronymic = "Петрович", Age = 23, PositionId = 4, DateOfEmployment = new DateTime(2018, 10, 28) },
+            new Employee { Id = 3, LastName = "Баширов", FirstName = "Руслан", Patronymic = "Михайлович", Age = 32, PositionId = 5, DateOfEmployment = new DateTime(2017, 03, 03) },
+            new Employee { Id = 4, LastName = "Сидоров", FirstName = "Сидор", Patronymic = "Сидорович", Age = 18, PositionId = 2, DateOfEmployment = new DateTime(2020, 11, 25) },
         };
         public static List<PositionClass> Positions { get; } = new()
         {
-            new PositionClass { Id = 1, PositionName = "Менеджер доставки" },
-            new PositionClass { Id = 2, PositionName = "Продавец-консультант" },
-            new PositionClass { Id = 3, PositionName = "Старший продавец-консультант" },
-            new PositionClass { Id = 4, PositionName = "Главный бухгалтер" },
-            new PositionClass { Id = 5, PositionName = "Директор" },
+            new PositionClass { Id = 1, Name = "Менеджер доставки" },
+            new PositionClass { Id = 2, Name = "Продавец-консультант" },
+            new PositionClass { Id = 3, Name = "Старший продавец-консультант" },
+            new PositionClass { Id = 4, Name = "Главный бухгалтер" },
+            new PositionClass { Id = 5, Name = "Директор" },
        
         };
         public static IEnumerable<Section> Sections { get; } = new[]
         {
-              new Section { Id = 1, Name = "Спорт", Order = 0 },
+             new Section { Id = 1, Name = "Спорт", Order = 0 },
               new Section { Id = 2, Name = "Nike", Order = 0, ParentId = 1 },
               new Section { Id = 3, Name = "Under Armour", Order = 1, ParentId = 1 },
               new Section { Id = 4, Name = "Adidas", Order = 2, ParentId = 1 },
               new Section { Id = 5, Name = "Puma", Order = 3, ParentId = 1 },
               new Section { Id = 6, Name = "ASICS", Order = 4, ParentId = 1 },
               new Section { Id = 7, Name = "Для мужчин", Order = 1 },
-              new Section { Id = 8, Name = "Fendi", Order = 0, ParentId = 7 },
-              new Section { Id = 9, Name = "Guess", Order = 1, ParentId = 7 },
+              new Section { Id = 8, Name = "Section0", Order = 0, ParentId = 7 },
+              new Section { Id = 9, Name = "Section1", Order = 1, ParentId = 7 },
               new Section { Id = 10, Name = "Valentino", Order = 2, ParentId = 7 },
               new Section { Id = 11, Name = "Диор", Order = 3, ParentId = 7 },
               new Section { Id = 12, Name = "Версачи", Order = 4, ParentId = 7 },
@@ -42,9 +43,9 @@ namespace WebStore.Data
               new Section { Id = 16, Name = "Шанель", Order = 8, ParentId = 7 },
               new Section { Id = 17, Name = "Гуччи", Order = 9, ParentId = 7 },
               new Section { Id = 18, Name = "Для женщин", Order = 2 },
-              new Section { Id = 19, Name = "Fendi", Order = 0, ParentId = 18 },
+              new Section { Id = 19, Name = "Section2", Order = 0, ParentId = 18 },
               new Section { Id = 20, Name = "Guess", Order = 1, ParentId = 18 },
-              new Section { Id = 21, Name = "Valentino", Order = 2, ParentId = 18 },
+              new Section { Id = 21, Name = "Section3", Order = 2, ParentId = 18 },
               new Section { Id = 22, Name = "Dior", Order = 3, ParentId = 18 },
               new Section { Id = 23, Name = "Versace", Order = 4, ParentId = 18 },
               new Section { Id = 24, Name = "Для детей", Order = 3 },

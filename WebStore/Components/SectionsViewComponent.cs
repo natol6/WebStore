@@ -25,19 +25,19 @@ namespace WebStore.Components
                     Order = s.Order,
                 })
                 .ToList();
-            foreach(var parent_section in parent_sections_view)
+            foreach (var parent_section in parent_sections_view)
             {
                 var childs = sections.Where(s => s.ParentId == parent_section.Id);
-                foreach(var child_section in childs)
-                {
+
+                foreach (var child_section in childs)
                     parent_section.ChildSections.Add(new SectionViewModel
                     {
                         Id = child_section.Id,
-                        Name= child_section.Name,
-                        Order= child_section.Order,
-                        Parent = parent_section,
+                        Name = child_section.Name,
+                        Order = child_section.Order,
+                        Parent = parent_section
                     });
-                }
+
                 parent_section.ChildSections.Sort((a, b) => Comparer<int>.Default.Compare(a.Order, b.Order));
             }
             parent_sections_view.Sort((a, b) => Comparer<int>.Default.Compare(a.Order, b.Order));

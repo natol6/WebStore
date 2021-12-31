@@ -41,13 +41,13 @@
                 <select name="Position">
                     @foreach(var pos in positions)
                     {
-                        if(Model.Position != null && pos.PositionName == Model.Position)
+                        if(Model.Position != null && pos == Model.Position)
                         {
-                            <option selected>@pos.PositionName</option>
+                            <option selected>@pos</option>
                         }
                         else
                         {
-                            <option>@pos.PositionName</option>
+                            <option>@pos</option>
                         }
                     }
     
@@ -56,7 +56,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="DateOfEmployment" class="control-label"></label>
-                <input asp-for="DateOfEmployment" class="form-control" />
+                <input asp-for="DateOfEmployment" class="form-control" value="@Model.DateOfEmployment.ToString("yyyy-MM-dd")"/>
                 <span asp-validation-for="DateOfEmployment" class="text-danger"></span>
             </div>
             <div class="form-group">
