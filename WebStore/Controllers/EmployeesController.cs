@@ -21,12 +21,11 @@ namespace WebStore.Controllers
         public IActionResult Index()
         {
             var employees = _EmployeesData.GetAll();
-            var positions = _EmployeesData.GetAllPositions();
+            var positions = _EmployeesData.GetAllPositions().ToDictionary(p => p.Id);
             var employees_view = new List<EmployeeViewModel>();
             foreach (var employee in employees)
             {
-                //var position = positions.FirstOrDefault(p => p.Id == employee.PositionId);
-                var position = _EmployeesData.GetByIdPosition(employee.PositionId);
+                
                 var employee_view = new EmployeeViewModel
                     {
                     Id = employee.Id,
@@ -34,7 +33,7 @@ namespace WebStore.Controllers
                     FirstName = employee.FirstName,
                     Patronymic = employee.Patronymic,
                     Age = employee.Age,
-                    Position = position.Name,
+                    Position = positions[employee.PositionId].Name,
                     DateOfEmployment = employee.DateOfEmployment,
                     };
                 employees_view.Add(employee_view);
