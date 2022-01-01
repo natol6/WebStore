@@ -14,7 +14,7 @@ namespace WebStore.Controllers
         }
         public IActionResult Logout()
         {
-            return View();
+            return RedirectToAction("Index", "Home");
         }
         public IActionResult AccessDenied()
         {
