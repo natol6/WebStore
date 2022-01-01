@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebStore.Domain.Entities.Identity
 {
-    internal class Role : IdentityRole
+    public class Role : IdentityRole
     {
 
     }
