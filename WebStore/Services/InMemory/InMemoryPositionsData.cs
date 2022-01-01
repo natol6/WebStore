@@ -4,6 +4,7 @@ using WebStore.Data;
 
 namespace WebStore.Services.InMemory
 {
+    [Obsolete("Используйте класс WebStore.Servises.InSQL.SqlPositionsData")]
     public class InMemoryPositionsData : IPositionsData
     {
         private readonly ILogger<InMemoryPositionsData> _Logger;
