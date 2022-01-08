@@ -22,4 +22,5 @@ namespace WebStore.ViewModels.Identity
         {
             get; set;
         }
+    }
 }
