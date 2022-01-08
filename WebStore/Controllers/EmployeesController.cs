@@ -5,10 +5,11 @@ using WebStore.Data;
 using WebStore.ViewModels;
 using WebStore.Services;
 using WebStore.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebStore.Controllers
 {
-    //[Route("Staff/{action=Index}/{Id?}")]
+    [Authorize(Roles = "Admin")]
     public class EmployeesController : Controller
     {
         private readonly ILogger<EmployeesController> _Logger;
