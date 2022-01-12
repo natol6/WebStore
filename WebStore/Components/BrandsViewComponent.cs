@@ -13,8 +13,11 @@ namespace WebStore.Components
     public class BrandsViewComponent : ViewComponent
     {
         private readonly IProductData _ProductData;
+        
         public BrandsViewComponent(IProductData productData) => _ProductData = productData;
+        
         public IViewComponentResult Invoke() => View(GetBrands());
+        
         private IEnumerable<BrandViewModel> GetBrands() =>
             _ProductData.GetBrands()
             .OrderBy(b => b.Order)

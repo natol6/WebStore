@@ -16,6 +16,7 @@ namespace WebStore.Services.InMemory
         {
             return TestData.Sections;
         }
+        
         public IEnumerable<Product> GetProducts(ProductFilter? Filter = null)
         {
             IEnumerable<Product> query = TestData.Products;

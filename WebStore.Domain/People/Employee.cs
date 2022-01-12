@@ -8,6 +8,7 @@ namespace WebStore.Domain.People;
  public class Employee : Human
  {
     public int Age { get; set; }
+    
     public int PositionId { get; set; }
     
     [ForeignKey(nameof(PositionId))]

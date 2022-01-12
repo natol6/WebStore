@@ -10,7 +10,9 @@ namespace WebStore.Domain.People.Base
     public abstract class Human : Entity
     {
         public string LastName { get; set; }
+        
         public string FirstName { get; set; }
+        
         public string? Patronymic { get; set; }
     }
 }

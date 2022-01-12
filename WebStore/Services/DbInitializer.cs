@@ -9,11 +9,13 @@ namespace WebStore.Services
     {
         private readonly WebStoreDB _db;
         private readonly ILogger<DbInitializer> _logger;
+        
         public DbInitializer(WebStoreDB db, ILogger<DbInitializer> Logger)
         {
             _db = db;
             _logger = Logger;
         }
+        
         public async Task<bool> RemoveAsinc(CancellationToken Cancel = default)
         {
             var result = await _db.Database.EnsureDeletedAsync(Cancel).ConfigureAwait(false);
@@ -95,6 +97,7 @@ namespace WebStore.Services
             }
             _logger.LogInformation("Инициализация тестовых данных товаров выполнена успешно");
         }
+        
         private async Task InitializeEmployeesAsync(CancellationToken Cancel)
         {
             if (await _db.Employees.AnyAsync(Cancel))

@@ -14,6 +14,7 @@ namespace WebStore.Data
             new Employee { Id = 3, LastName = "Баширов", FirstName = "Руслан", Patronymic = "Михайлович", Age = 32, PositionId = 5, DateOfEmployment = new DateTime(2017, 03, 03) },
             new Employee { Id = 4, LastName = "Сидоров", FirstName = "Сидор", Patronymic = "Сидорович", Age = 18, PositionId = 2, DateOfEmployment = new DateTime(2020, 11, 25) },
         };
+        
         public static List<PositionClass> Positions { get; } = new()
         {
             new PositionClass { Id = 1, Name = "Менеджер доставки" },
@@ -23,6 +24,7 @@ namespace WebStore.Data
             new PositionClass { Id = 5, Name = "Директор" },
        
         };
+        
         public static IEnumerable<Section> Sections { get; } = new[]
         {
              new Section { Id = 1, Name = "Спорт", Order = 0 },

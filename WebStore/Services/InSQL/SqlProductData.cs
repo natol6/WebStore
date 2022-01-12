@@ -9,7 +9,9 @@ namespace WebStore.Services.InSQL
     public class SqlProductData : IProductData
     {
         private readonly WebStoreDB _db;
+        
         public SqlProductData(WebStoreDB db) => _db = db;
+        
         public IEnumerable<Brand> GetBrands() => _db.Brands;
         
         public IEnumerable<Section> GetSections() => _db.Sections;

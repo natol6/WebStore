@@ -3,10 +3,12 @@
     public class TestMiddleware
     {
         private readonly RequestDelegate _Next;
+        
         public TestMiddleware(RequestDelegate Next) 
         { 
             _Next = Next;
         }
+        
         public async Task Invoke(HttpContext context)
         {
             var controller_name = context.Request.RouteValues["Controller"];

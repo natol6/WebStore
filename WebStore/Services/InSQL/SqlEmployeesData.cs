@@ -10,11 +10,13 @@ namespace WebStore.Services.InSQL
     {
         private readonly ILogger<SqlEmployeesData> _Logger;
         private readonly WebStoreDB _db;
+        
         public SqlEmployeesData(WebStoreDB db, ILogger<SqlEmployeesData> logger)
         {
             _Logger = logger;
             _db = db;
         }
+        
         public int Add(Employee employee)
         {
             if (employee is null)
@@ -60,10 +62,12 @@ namespace WebStore.Services.InSQL
 
         public IEnumerable<Employee> GetAll() => _db.Employees.AsEnumerable();
         
-
         public Employee? GetById(int id) => _db.Employees.Find(id);
+        
         public IEnumerable<PositionClass> GetAllPositions() => _db.Positions.AsEnumerable();
+        
         public PositionClass? GetByIdPosition(int id) => _db.Positions.FirstOrDefault(p => p.Id == id);
+        
         public PositionClass? GetByNamePosition(string name) => _db.Positions.FirstOrDefault(p => p.Name == name);
     }
 }
