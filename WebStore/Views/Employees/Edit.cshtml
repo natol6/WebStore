@@ -38,18 +38,19 @@
             <div class="form-group">
                 <label asp-for="Position" class="control-label"></label>
                 @*<input asp-for="Position" class="form-control" />*@
-                <select name="Position">
-                    @foreach(var pos in positions)
+                <select asp-for="Position" asp-items="ViewBag.Positions" name="Position">
+                    @if(Model.Position != null)
                     {
-                        if(Model.Position != null && pos == Model.Position)
+                        foreach(var pos in positions)
                         {
-                            <option selected>@pos</option>
+                            if (pos.Value == Model.Position)
+                            {
+                                pos.Selected = true;
+                            }
                         }
-                        else
-                        {
-                            <option>@pos</option>
-                        }
+                        
                     }
+                    <option selected>@positions.SelectedValue</option>
     
                 </select>
                 <span asp-validation-for="Position" class="text-danger"></span>

@@ -20,6 +20,7 @@ namespace WebStore.Controllers
         {
             return View(new RegisterUserViewModel());
         }
+        
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterUserViewModel Model)
         {
@@ -43,6 +44,7 @@ namespace WebStore.Controllers
 
             return View(Model);
         }
+        
         public IActionResult Login(string ReturnUrl) => View(new LoginViewModel { ReturnUrl = ReturnUrl });
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -72,11 +74,13 @@ namespace WebStore.Controllers
 
             return View(Model);
         }
+        
         public async Task<IActionResult> Logout()
         {
             await _SignInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+        
         public IActionResult AccessDenied()
         {
             return View();

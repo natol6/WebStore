@@ -24,7 +24,9 @@ namespace WebStore.Controllers
             ViewBag.Products = products;
             return View();
         }
+        
         public IActionResult Error404() => View();
+        
         public void Throw(string message) => throw new ApplicationException(message);
         
     }

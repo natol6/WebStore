@@ -10,12 +10,14 @@ namespace WebStore.Services.InMemory
         private readonly ILogger<InMemoryPositionsData> _Logger;
         private readonly ICollection<PositionClass> _Positions;
         private int MaxFreeId;
+        
         public InMemoryPositionsData(ILogger<InMemoryPositionsData> logger)
         {
             _Logger = logger;
             _Positions = TestData.Positions;
             MaxFreeId = _Positions.DefaultIfEmpty().Max(e => e?.Id ?? 0) + 1;
         }
+        
         public int Add(PositionClass position)
         {
             if(position is null)

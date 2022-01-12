@@ -2,6 +2,7 @@
 using WebStore.Services.Interfaces;
 using WebStore.Data;
 using WebStore.DAL.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebStore.Services.InSQL
 {
@@ -9,11 +10,13 @@ namespace WebStore.Services.InSQL
     {
         private readonly ILogger<SqlPositionsData> _Logger;
         private readonly WebStoreDB _db;
+        
         public SqlPositionsData(WebStoreDB db, ILogger<SqlPositionsData> logger)
         {
             _Logger = logger;
             _db = db;
         }
+        
         public int Add(PositionClass position)
         {
             if(position is null)
@@ -22,13 +25,6 @@ namespace WebStore.Services.InSQL
                 throw new ArgumentNullException(nameof(position));
             }
                 
-            if (_db.Positions.Contains(position))
-            {
-                _Logger.LogInformation("Попытка добавить существующую должность Id: {0}", position.Id);
-                return position.Id;
-            }
-                
-            
             _db.Positions.Add(position);
             _db.SaveChanges();
             _Logger.LogInformation("Должность Id: {0} успешно добавлена", position.Id);
@@ -59,10 +55,10 @@ namespace WebStore.Services.InSQL
             return result;
         }
 
-        public IEnumerable<PositionClass> GetAll() => _db.Positions.AsEnumerable();
+        public IEnumerable<PositionClass> GetAll() => _db.Positions.Include(p => p.Employees).AsEnumerable();
         
 
-        public PositionClass? GetById(int id) => _db.Positions.FirstOrDefault(position => position.Id == id);
+        public PositionClass? GetById(int id) => _db.Positions.Include(p => p.Employees).FirstOrDefault(position => position.Id == id);
 
         //public PositionClass? GetByName(string name) => _db.Positions.FirstOrDefault(position => position.Name == name);
         //public string GetName(int id) => _db.Positions.FirstOrDefault(p => p.Id == id).Name;
