@@ -5,6 +5,7 @@ using WebStore.Domain.References;
 
 namespace WebStore.Services.InMemory
 {
+    [Obsolete("Используйте класс WebStore.Servises.InSQL.SqlEmployeesData")]
     public class InMemoryEmployeesData : IEmployeesData
     {
         private readonly ILogger<InMemoryEmployeesData> _Logger;

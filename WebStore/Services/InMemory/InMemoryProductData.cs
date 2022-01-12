@@ -5,6 +5,7 @@ using WebStore.Domain;
 
 namespace WebStore.Services.InMemory
 {
+    [Obsolete("Используйте класс WebStore.Servises.InSQL.SqlProductData")]
     public class InMemoryProductData : IProductData
     {
         public IEnumerable<Brand> GetBrands()

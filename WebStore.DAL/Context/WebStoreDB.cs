@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -6,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebStore.Domain.Entities;
+using WebStore.Domain.Entities.Identity;
 using WebStore.Domain.People;
 using WebStore.Domain.References;
 
 namespace WebStore.DAL.Context
 {
-    public class WebStoreDB : DbContext
+    public class WebStoreDB : IdentityDbContext<User, Role, string>
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Section> Sections { get; set; }
