@@ -23,7 +23,7 @@
         @if (User.Identity.IsAuthenticated @*&& User.IsInRole("Admin")*@)
         {
            <li><a asp-controller="Employees" asp-action="Index">Сотрудники</a></li> 
-        };
+        }
         
     </ul>
 </div>
