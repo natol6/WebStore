@@ -3,6 +3,7 @@ using WebStore.Services.Interfaces;
 using WebStore.Data;
 using WebStore.DAL.Context;
 using WebStore.Domain.References;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebStore.Services.InSQL
 {
@@ -61,14 +62,14 @@ namespace WebStore.Services.InSQL
             return result;
         }
 
-        public IEnumerable<Employee> GetAll() => _db.Employees.AsEnumerable();
+        public IEnumerable<Employee> GetAll() => _db.Employees.Include(e => e.Position).AsEnumerable();
         
-        public Employee? GetById(int id) => _db.Employees.Find(id);
+        public Employee? GetById(int id) => _db.Employees.Include(e => e.Position).FirstOrDefault(e => e.Id == id);
         
-        public IEnumerable<PositionClass> GetAllPositions() => _db.Positions.AsEnumerable();
+        public IEnumerable<PositionClass> GetAllPositions() => _db.Positions.Include(p => p.Employees).AsEnumerable();
         
-        public PositionClass? GetByIdPosition(int id) => _db.Positions.FirstOrDefault(p => p.Id == id);
+        public PositionClass? GetByIdPosition(int id) => _db.Positions.Include(p => p.Employees).FirstOrDefault(p => p.Id == id);
         
-        public PositionClass? GetByNamePosition(string name) => _db.Positions.FirstOrDefault(p => p.Name == name);
+        public PositionClass? GetByNamePosition(string name) => _db.Positions.Include(p => p.Employees).FirstOrDefault(p => p.Name == name);
     }
 }
