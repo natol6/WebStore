@@ -62,11 +62,11 @@ services.AddScoped<IPositionsData, SqlPositionsData>();
 
 var app = builder.Build();
 
-//await using (var scope = app.Services.CreateAsyncScope())
-//{
-//    var db_initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-//    await db_initializer.InitializeAsync();
-//}
+await using (var scope = app.Services.CreateAsyncScope())
+{
+    var db_initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+    await db_initializer.InitializeAsync();
+}
 
 if (app.Environment.IsDevelopment())
 {
