@@ -19,11 +19,21 @@ namespace WebStore.Services.InSQL
         
         public IEnumerable<Product> GetProducts(ProductFilter? Filter = null)
         {
-            IQueryable<Product> query = _db.Products;
-            if (Filter?.SectionId != null)
-                query = query.Where(p => p.SectionId == Filter.SectionId);
-            if (Filter?.BrandId != null)
-                query = query.Where(p => p.BrandId == Filter.BrandId);
+            IQueryable<Product> query = _db.Products
+           .Include(p => p.Brand)
+           .Include(p => p.Section);
+
+            if (Filter?.Ids?.Length > 0)
+                query = query.Where(product => Filter.Ids.Contains(product.Id));
+            else
+            {
+                if (Filter?.SectionId is { } section_id)
+                    query = query.Where(p => p.SectionId == section_id);
+
+                if (Filter?.BrandId is { } brand_id)
+                    query = query.Where(p => p.BrandId == brand_id);
+            }
+
             return query;
         }
 

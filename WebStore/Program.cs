@@ -7,6 +7,7 @@ using WebStore.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using WebStore.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
+using WebStore.Services.InCookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,6 +57,7 @@ services.ConfigureApplicationCookie(opt =>
 services.AddScoped<IEmployeesData, SqlEmployeesData>();
 services.AddScoped<IProductData, SqlProductData>();
 services.AddScoped<IPositionsData, SqlPositionsData>();
+services.AddScoped<ICartService, InCookiesCartService>();
 
 var app = builder.Build();
 
