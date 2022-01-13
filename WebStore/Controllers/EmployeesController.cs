@@ -13,12 +13,15 @@ namespace WebStore.Controllers
     public class EmployeesController : Controller
     {
         private readonly ILogger<EmployeesController> _Logger;
+        
         private readonly IEmployeesData _EmployeesData;
+        
         public EmployeesController(IEmployeesData EmployeesData, ILogger<EmployeesController> logger)
         {
             _Logger = logger;
             _EmployeesData = EmployeesData;
         }
+        
         public IActionResult Index()
         {
             var employees = _EmployeesData.GetAll();
@@ -48,7 +51,7 @@ namespace WebStore.Controllers
             if (employee == null)
                 return NotFound();
             var position = _EmployeesData.GetByIdPosition(employee.PositionId);
-            ViewBag.Image = String.Format("{0}.png", employee.Id);
+            ViewBag.Image = $"{employee.Id}.png";
             var model = new EmployeeViewModel
                  {
                     Id = employee.Id,
@@ -61,11 +64,13 @@ namespace WebStore.Controllers
                 };
             return View(model);
         }
+        
         public IActionResult Create()
         {
             ViewBag.Positions = GetPositionsView();
             return View("Edit", new EmployeeViewModel());
         }
+        
         public IActionResult Edit(int? id)
         {
             ViewBag.Positions = GetPositionsView();
@@ -92,6 +97,7 @@ namespace WebStore.Controllers
             };
             return View(model);
         }
+        
         [HttpPost]
         public IActionResult Edit(EmployeeViewModel model)
         {
@@ -144,6 +150,7 @@ namespace WebStore.Controllers
             };
             return View(model);
         }
+        
         [HttpPost]
         public IActionResult DeleteConfirmed(int id)
         {
@@ -156,6 +163,7 @@ namespace WebStore.Controllers
             _Logger.LogInformation("Удален сотрудник Id: {0} ", id);
             return RedirectToAction("Index");
         }
+        
         private List<string> GetPositionsView()
         {
             var positions = _EmployeesData.GetAllPositions();

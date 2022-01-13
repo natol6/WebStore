@@ -8,6 +8,7 @@ namespace WebStore.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<User> _UserManager;
+        
         private readonly SignInManager<User> _SignInManager;
 
         public AccountController(UserManager<User> UserManager, SignInManager<User> SignInManager)
@@ -20,6 +21,7 @@ namespace WebStore.Controllers
         {
             return View(new RegisterUserViewModel());
         }
+        
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterUserViewModel Model)
         {
@@ -43,6 +45,7 @@ namespace WebStore.Controllers
 
             return View(Model);
         }
+        
         public IActionResult Login(string ReturnUrl) => View(new LoginViewModel { ReturnUrl = ReturnUrl });
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -72,11 +75,13 @@ namespace WebStore.Controllers
 
             return View(Model);
         }
+        
         public async Task<IActionResult> Logout()
         {
             await _SignInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+        
         public IActionResult AccessDenied()
         {
             return View();
