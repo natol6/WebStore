@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebStore.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class EmployeesController : Controller
     {
         private readonly ILogger<EmployeesController> _Logger;
