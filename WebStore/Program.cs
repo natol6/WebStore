@@ -64,7 +64,7 @@ var app = builder.Build();
 await using (var scope = app.Services.CreateAsyncScope())
 {
     var db_initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-    await db_initializer.InitializeAsync();
+    await db_initializer.InitializeAsync(RemoveBefore: false).ConfigureAwait(true);
 }
 
 if (app.Environment.IsDevelopment())
@@ -81,13 +81,20 @@ app.UseAuthorization();
 app.UseMiddleware<TestMiddleware>();
 app.UseWelcomePage("/welcome");
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+    endpoints.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=home}/{action=index}/{id?}");
+});
+
 app.MapGet("/throw", () =>
 {
     throw new ApplicationException("Ошибка в программе!");
 });
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=home}/{action=index}/{id?}");
 
 app.Run();
