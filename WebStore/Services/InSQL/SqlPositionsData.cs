@@ -2,18 +2,22 @@
 using WebStore.Services.Interfaces;
 using WebStore.Data;
 using WebStore.DAL.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebStore.Services.InSQL
 {
     public class SqlPositionsData : IPositionsData
     {
         private readonly ILogger<SqlPositionsData> _Logger;
+        
         private readonly WebStoreDB _db;
+        
         public SqlPositionsData(WebStoreDB db, ILogger<SqlPositionsData> logger)
         {
             _Logger = logger;
             _db = db;
         }
+        
         public int Add(PositionClass position)
         {
             if(position is null)
@@ -59,10 +63,9 @@ namespace WebStore.Services.InSQL
             return result;
         }
 
-        public IEnumerable<PositionClass> GetAll() => _db.Positions.AsEnumerable();
+        public IEnumerable<PositionClass> GetAll() => _db.Positions.Include(p => p.Employees).AsEnumerable();
         
-
-        public PositionClass? GetById(int id) => _db.Positions.FirstOrDefault(position => position.Id == id);
+        public PositionClass? GetById(int id) => _db.Positions.Include(p => p.Employees).FirstOrDefault(position => position.Id == id);
 
         //public PositionClass? GetByName(string name) => _db.Positions.FirstOrDefault(position => position.Name == name);
         //public string GetName(int id) => _db.Positions.FirstOrDefault(p => p.Id == id).Name;

@@ -1,13 +1,13 @@
 ﻿using WebStore.Infrastructure.Conventions;
 using WebStore.Infrastructure.Middleware;
 using WebStore.Services.Interfaces;
-using WebStore.Services.InMemory;
 using WebStore.Services.InSQL;
 using WebStore.Services;
 using WebStore.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using WebStore.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
+using WebStore.Services.InCookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,20 +53,19 @@ services.ConfigureApplicationCookie(opt =>
 
     opt.SlidingExpiration = true;
 });
-//services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
-//services.AddSingleton<IProductData, InMemoryProductData>();
-//services.AddSingleton<IPositionsData, InMemoryPositionsData>();
+
 services.AddScoped<IEmployeesData, SqlEmployeesData>();
 services.AddScoped<IProductData, SqlProductData>();
 services.AddScoped<IPositionsData, SqlPositionsData>();
+services.AddScoped<ICartService, InCookiesCartService>();
 
 var app = builder.Build();
 
-//await using (var scope = app.Services.CreateAsyncScope())
-//{
-//    var db_initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-//    await db_initializer.InitializeAsync();
-//}
+await using (var scope = app.Services.CreateAsyncScope())
+{
+    var db_initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+    await db_initializer.InitializeAsync();
+}
 
 if (app.Environment.IsDevelopment())
 {

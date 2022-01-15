@@ -8,6 +8,7 @@ namespace WebStore.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<User> _UserManager;
+        
         private readonly SignInManager<User> _SignInManager;
 
         public AccountController(UserManager<User> UserManager, SignInManager<User> SignInManager)
@@ -20,6 +21,7 @@ namespace WebStore.Controllers
         {
             return View(new RegisterUserViewModel());
         }
+        
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterUserViewModel Model)
         {
@@ -31,10 +33,11 @@ namespace WebStore.Controllers
                 UserName = Model.UserName,
             };
 
-            var registration_result = await _UserManager.CreateAsync(user, Model.Password);
+            var registration_result = await _UserManager.CreateAsync(user, Model.Password).ConfigureAwait(true);
             if (registration_result.Succeeded)
             {
-                await _SignInManager.SignInAsync(user, false);
+                await _UserManager.AddToRoleAsync(user, Role.Users).ConfigureAwait(true);
+                await _SignInManager.SignInAsync(user, false).ConfigureAwait(true);
                 return RedirectToAction("Index", "Home");
             }
             
@@ -43,6 +46,7 @@ namespace WebStore.Controllers
 
             return View(Model);
         }
+        
         public IActionResult Login(string ReturnUrl) => View(new LoginViewModel { ReturnUrl = ReturnUrl });
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -55,7 +59,7 @@ namespace WebStore.Controllers
                 Model.UserName,
                 Model.Password,
                 Model.RememberMe,
-                true);
+                true).ConfigureAwait(true);
 
             if (login_result.Succeeded)
             {
@@ -72,11 +76,13 @@ namespace WebStore.Controllers
 
             return View(Model);
         }
+        
         public async Task<IActionResult> Logout()
         {
-            await _SignInManager.SignOutAsync();
+            await _SignInManager.SignOutAsync().ConfigureAwait(true);
             return RedirectToAction("Index", "Home");
         }
+        
         public IActionResult AccessDenied()
         {
             return View();
