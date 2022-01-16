@@ -57,6 +57,7 @@ services.ConfigureApplicationCookie(opt =>
 services.AddScoped<IEmployeesData, SqlEmployeesData>();
 services.AddScoped<IProductData, SqlProductData>();
 services.AddScoped<IPositionsData, SqlPositionsData>();
+services.AddScoped<IOrderService, SqlOrderService>();
 services.AddScoped<ICartService, InCookiesCartService>();
 
 var app = builder.Build();
