@@ -10,11 +10,11 @@ namespace WebStore.Domain.People;
     public int Age { get; set; }
     
     public int PositionId { get; set; }
-    
+
     [ForeignKey(nameof(PositionId))]
-    public PositionClass Position { get; set; }
+    public PositionClass Position { get; set; } = null!;
    
-    public DateTime DateOfEmployment { get; set; }
+    public DateTime DateOfEmployment { get; set; } = DateTime.Now;
 
 }
 
