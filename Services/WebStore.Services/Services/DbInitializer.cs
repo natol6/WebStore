@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using WebStore.DAL.Context;
 using WebStore.Data;
 using WebStore.Domain.Entities.Identity;
-using WebStore.Services.Interfaces;
+using WebStore.Interfaces.Services;
 
-namespace WebStore.Services
+namespace WebStore.Services.Services
 {
     public class DbInitializer : IDbInitializer
     {
         private readonly WebStoreDB _db;
-        
+
         private readonly ILogger<DbInitializer> _logger;
 
         private readonly UserManager<User> _UserManager;
@@ -25,7 +26,7 @@ namespace WebStore.Services
             _UserManager = UserManager;
             _RoleManager = RoleManager;
         }
-        
+
         public async Task<bool> RemoveAsinc(CancellationToken Cancel = default)
         {
             var result = await _db.Database.EnsureDeletedAsync(Cancel).ConfigureAwait(false);
@@ -38,13 +39,13 @@ namespace WebStore.Services
             return result;
         }
 
-        public async Task InitializeAsync(bool RemoveBefore = false, CancellationToken Cancel = default) 
+        public async Task InitializeAsync(bool RemoveBefore = false, CancellationToken Cancel = default)
         {
             _logger.LogInformation("Инициализация БД...");
-            
+
             if (RemoveBefore)
                 await RemoveAsinc(Cancel).ConfigureAwait(false);
-            
+
             var pending_migrations = await _db.Database.GetPendingMigrationsAsync(Cancel);
             if (pending_migrations.Any())
             {
@@ -54,16 +55,16 @@ namespace WebStore.Services
 
                 _logger.LogInformation("Выполнение миграции БД выполнено успешно");
             }
-            
+
             await InitializeProductsAsync(Cancel).ConfigureAwait(false);
-            
+
             await InitializeEmployeesAsync(Cancel).ConfigureAwait(false);
-            
+
             await InitializeIdentityAsync(Cancel).ConfigureAwait(false);
 
             _logger.LogInformation("Инициализация БД выполнена успешно");
         }
-        
+
         private async Task InitializeProductsAsync(CancellationToken Cancel = default)
         {
             if (_db.Sections.Any())
@@ -71,7 +72,7 @@ namespace WebStore.Services
                 _logger.LogInformation("Инициализация тестовых данных о товарах не требуется");
                 return;
             }
-            
+
             _logger.LogInformation("Инициализация тестовых данных о товарах ...");
 
             var sections_pool = TestData.Sections.ToDictionary(s => s.Id);
@@ -110,7 +111,7 @@ namespace WebStore.Services
             }
             _logger.LogInformation("Инициализация тестовых данных товаров выполнена успешно");
         }
-        
+
         private async Task InitializeEmployeesAsync(CancellationToken Cancel)
         {
             if (await _db.Employees.AnyAsync(Cancel))
@@ -120,13 +121,13 @@ namespace WebStore.Services
             }
 
             _logger.LogInformation("Инициализация сотрудников...");
-            
+
             var positions_pool = TestData.Positions.ToDictionary(s => s.Id);
-            
+
             foreach (var employee in TestData.Employees)
             {
                 employee.Position = positions_pool[employee.PositionId];
-                
+
                 employee.Id = 0;
                 employee.PositionId = 0;
             }

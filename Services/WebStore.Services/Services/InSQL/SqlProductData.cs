@@ -1,18 +1,17 @@
 ﻿using WebStore.Domain.Entities;
-using WebStore.Services.Interfaces;
-using WebStore.Data;
 using WebStore.Domain;
 using WebStore.DAL.Context;
 using Microsoft.EntityFrameworkCore;
+using WebStore.Interfaces.Services;
 
-namespace WebStore.Services.InSQL
+namespace WebStore.Services.Services.InSQL
 {
     public class SqlProductData : IProductData
     {
         private readonly WebStoreDB _db;
-        
+
         public SqlProductData(WebStoreDB db) => _db = db;
-        
+
         public IEnumerable<Brand> GetBrands() => _db.Brands;
 
         public Brand? GetBrandById(int Id) => _db.Brands

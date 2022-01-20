@@ -1,13 +1,13 @@
 ﻿using WebStore.Infrastructure.Conventions;
 using WebStore.Infrastructure.Middleware;
-using WebStore.Services.Interfaces;
-using WebStore.Services.InSQL;
-using WebStore.Services;
 using WebStore.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using WebStore.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
-using WebStore.Services.InCookies;
+using WebStore.Interfaces.Services;
+using WebStore.Services.Services;
+using WebStore.Services.Services.InSQL;
+using WebStore.Services.Services.InCookies;
 
 var builder = WebApplication.CreateBuilder(args);
 

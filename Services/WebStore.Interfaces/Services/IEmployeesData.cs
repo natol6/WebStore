@@ -1,7 +1,7 @@
 ﻿using WebStore.Domain.People;
 using WebStore.Domain.References;
 
-namespace WebStore.Services.Interfaces
+namespace WebStore.Interfaces.Services
 {
     public interface IEmployeesData
     {

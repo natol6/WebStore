@@ -1,5 +1,4 @@
-﻿using WebStore.ViewModels;
-using WebStore.Domain.People;
+﻿using WebStore.Domain.People;
 using WebStore.Domain.Entities;
 using WebStore.Domain.References;
 
