@@ -2,11 +2,11 @@
 using WebStore.Domain.People;
 using WebStore.Domain.References;
 using WebStore.Data;
-using WebStore.ViewModels;
 using WebStore.Services;
 using WebStore.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using WebStore.Domain.Entities.Identity;
+using WebStore.Domain.ViewModels;
 
 namespace WebStore.Controllers
 {
