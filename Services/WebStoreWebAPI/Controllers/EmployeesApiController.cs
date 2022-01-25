@@ -34,6 +34,33 @@ namespace WebStoreWebAPI.Controllers
             return Ok(employee);
         }
 
+        [HttpGet]
+        [Route("positions")]
+        public IActionResult GetPos()
+        {
+            var positions = _EmployeesData.GetAllPositions();
+            return Ok(positions);
+        }
+
+        [HttpGet("{Id_Position}")]
+        public IActionResult GetByIdPos(int Id)
+        {
+            var position = _EmployeesData.GetByIdPosition(Id);
+            if (position is null)
+                return NotFound();
+
+            return Ok(position);
+        }
+        [HttpGet("{NamePosition}")]
+        public IActionResult GetByNamePos(string NamePosition)
+        {
+            var position = _EmployeesData.GetByNamePosition(NamePosition);
+            if (position is null)
+                return NotFound();
+
+            return Ok(position);
+        }
+
         [HttpPost]
         public IActionResult Add(Employee employee)
         {
@@ -56,30 +83,6 @@ namespace WebStoreWebAPI.Controllers
                 ? Ok(true)
                 : NotFound(false);
         }
-        [HttpGet]
-        public IActionResult GetPos()
-        {
-            var positions = _EmployeesData.GetAllPositions();
-            return Ok(positions);
-        }
-
-        [HttpGet("{Id}")]
-        public IActionResult GetByIdPos(int Id)
-        {
-            var position = _EmployeesData.GetByIdPosition(Id);
-            if (position is null)
-                return NotFound();
-
-            return Ok(position);
-        }
-        [HttpGet("{Name}")]
-        public IActionResult GetByNamePos(string Name)
-        {
-            var position = _EmployeesData.GetByNamePosition(Name);
-            if (position is null)
-                return NotFound();
-
-            return Ok(position);
-        }
+ 
     }
 }
