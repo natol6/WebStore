@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebStore.Domain.DTO;
+using WebStore.Interfaces;
 using WebStore.Interfaces.Services;
 
 namespace WebStoreWebAPI.Controllers
@@ -36,3 +38,4 @@ namespace WebStoreWebAPI.Controllers
             return CreatedAtAction(nameof(GetOrderById), new { order.Id }, order.ToDTO());
         }
     }
+}

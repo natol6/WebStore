@@ -128,3 +128,4 @@ namespace WebStore.Domain.DTO
 
         public static IEnumerable<Product?> FromDTO(this IEnumerable<ProductDTO?> products) => products.Select(FromDTO);
     }
+}
