@@ -42,7 +42,7 @@ namespace WebStoreWebAPI.Controllers
             return Ok(positions);
         }
 
-        [HttpGet("{Id_Position}")]
+        [HttpGet("position/{Id}")]
         public IActionResult GetByIdPos(int Id)
         {
             var position = _EmployeesData.GetByIdPosition(Id);
@@ -51,7 +51,7 @@ namespace WebStoreWebAPI.Controllers
 
             return Ok(position);
         }
-        [HttpGet("{NamePosition}")]
+        [HttpGet("position/{NamePosition}")]
         public IActionResult GetByNamePos(string NamePosition)
         {
             var position = _EmployeesData.GetByNamePosition(NamePosition);

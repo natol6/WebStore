@@ -59,19 +59,19 @@ namespace WebStore.WebAPI.Clients.Employees
 
         IEnumerable<PositionClass> IEmployeesData.GetAllPositions()
         {
-            var positions = Get<IEnumerable<PositionClass>>(Address);
+            var positions = Get<IEnumerable<PositionClass>>($"{Address}/positions");
             return positions!;
         }
 
         PositionClass? IEmployeesData.GetByIdPosition(int id)
         {
-            var result = Get<PositionClass>($"{Address}/{id}");
+            var result = Get<PositionClass>($"{Address}/position/{id}");
             return result;
         }
 
         PositionClass? IEmployeesData.GetByNamePosition(string name)
         {
-            var result = Get<PositionClass>($"{Address}/{name}");
+            var result = Get<PositionClass>($"{Address}/position/{name}");
             return result;
         }
     }
