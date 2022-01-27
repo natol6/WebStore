@@ -61,15 +61,21 @@ services.ConfigureApplicationCookie(opt =>
 
 //services.AddScoped<IEmployeesData, SqlEmployeesData>();
 //services.AddScoped<IProductData, SqlProductData>();
-services.AddScoped<IPositionsData, SqlPositionsData>();
+//services.AddScoped<IPositionsData, SqlPositionsData>();
 //services.AddScoped<IOrderService, SqlOrderService>();
 services.AddScoped<ICartService, InCookiesCartService>();
 
 var configuration = builder.Configuration;
-services.AddHttpClient<IValuesService, ValuesClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
-services.AddHttpClient<IEmployeesData, EmployeesClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
-services.AddHttpClient<IProductData, ProductsClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
-services.AddHttpClient<IOrderService, OrdersClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
+//services.AddHttpClient<IValuesService, ValuesClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
+//services.AddHttpClient<IEmployeesData, EmployeesClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
+//services.AddHttpClient<IProductData, ProductsClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
+//services.AddHttpClient<IOrderService, OrdersClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
+
+services.AddHttpClient("WebStoreAPI", client => client.BaseAddress = new(configuration["WebAPI"]))
+   .AddTypedClient<IValuesService, ValuesClient>()
+   .AddTypedClient<IEmployeesData, EmployeesClient>()
+   .AddTypedClient<IProductData, ProductsClient>()
+   .AddTypedClient<IOrderService, OrdersClient>();
 
 var app = builder.Build();
 
