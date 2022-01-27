@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Domain;
 using WebStore.Domain.DTO;
+using WebStore.Domain.DTO.Products;
 using WebStore.Interfaces.Services;
 
 namespace WebStoreWebAPI.Controllers
@@ -56,7 +57,7 @@ namespace WebStoreWebAPI.Controllers
         }
 
         [HttpGet("{Id}")]
-        public IActionResult GetProductGyId(int Id)
+        public IActionResult GetProductById(int Id)
         {
             var product = _ProductData.GetSectionById(Id);
             if (product is null)
@@ -69,7 +70,7 @@ namespace WebStoreWebAPI.Controllers
         public IActionResult CreateProduct(CreateProductDTO Model)
         {
             var product = _ProductData.CreateProduct(Model.Name, Model.Order, Model.Price, Model.ImageUrl, Model.Section, Model.Brand);
-            return CreatedAtAction(nameof(GetProductGyId), new { product.Id }, product.ToDTO());
+            return CreatedAtAction(nameof(GetProductById), new { product.Id }, product.ToDTO());
         }
     }
 }

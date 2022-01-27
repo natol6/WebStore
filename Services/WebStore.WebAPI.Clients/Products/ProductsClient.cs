@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebStore.Domain;
 using WebStore.Domain.DTO;
+using WebStore.Domain.DTO.Products;
 using WebStore.Domain.Entities;
 using WebStore.Interfaces;
 using WebStore.Interfaces.Services;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using WebStore.Domain.DTO.Employees;
 using WebStore.Domain.People;
 using WebStore.Domain.References;
 using WebStore.Interfaces.Services;
@@ -19,14 +20,14 @@ namespace WebStore.WebAPI.Clients.Employees
 
         public IEnumerable<Employee> GetAll()
         {
-            var employees = Get<IEnumerable<Employee>>(Address);
-            return employees!;
+            var employees = Get<IEnumerable<EmployeeDTO>>(Address);
+            return employees!.FromDTO()!;
         }
 
         public Employee? GetById(int id)
         {
-            var result = Get<Employee>($"{Address}/{id}");
-            return result;
+            var result = Get<EmployeeDTO>($"{Address}/{id}");
+            return result.FromDTO();
         }
 
         public int Add(Employee employee)
@@ -59,20 +60,20 @@ namespace WebStore.WebAPI.Clients.Employees
 
         IEnumerable<PositionClass> IEmployeesData.GetAllPositions()
         {
-            var positions = Get<IEnumerable<PositionClass>>($"{Address}/positions");
-            return positions!;
+            var positions = Get<IEnumerable<PositionClassDTO>>($"{Address}/positions");
+            return positions!.FromDTO()!;
         }
 
         PositionClass? IEmployeesData.GetByIdPosition(int id)
         {
-            var result = Get<PositionClass>($"{Address}/position/{id}");
-            return result;
+            var result = Get<PositionClassDTO>($"{Address}/position/{id}");
+            return result.FromDTO();
         }
 
         PositionClass? IEmployeesData.GetByNamePosition(string name)
         {
-            var result = Get<PositionClass>($"{Address}/position/{name}");
-            return result;
+            var result = Get<PositionClassDTO>($"{Address}/position/{name}");
+            return result.FromDTO();
         }
     }
 }
