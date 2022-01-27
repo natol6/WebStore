@@ -13,11 +13,13 @@ using WebStore.Interfaces.TestAPI;
 using WebStore.WebAPI.Clients.Employees;
 using WebStore.WebAPI.Clients.Products;
 using WebStore.WebAPI.Clients.Orders;
+using WebStore.WebAPI.Clients.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 var services = builder.Services;
+var configuration = builder.Configuration;
 
 services.AddControllersWithViews(opt =>
 {
@@ -26,7 +28,19 @@ services.AddControllersWithViews(opt =>
 
 services.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 services.AddTransient<IDbInitializer, DbInitializer>();
-services.AddIdentity<User, Role>().AddEntityFrameworkStores<WebStoreDB>().AddDefaultTokenProviders();
+services.AddIdentity<User, Role>()/*.AddEntityFrameworkStores<WebStoreDB>()*/.AddDefaultTokenProviders();
+
+services.AddHttpClient("WebStoreAPIIdentity", client => client.BaseAddress = new(configuration["WebAPI"]))
+   .AddTypedClient<IUserStore<User>, UsersClient>()
+   .AddTypedClient<IUserRoleStore<User>, UsersClient>()
+   .AddTypedClient<IUserPasswordStore<User>, UsersClient>()
+   .AddTypedClient<IUserEmailStore<User>, UsersClient>()
+   .AddTypedClient<IUserPhoneNumberStore<User>, UsersClient>()
+   .AddTypedClient<IUserTwoFactorStore<User>, UsersClient>()
+   .AddTypedClient<IUserClaimStore<User>, UsersClient>()
+   .AddTypedClient<IUserLoginStore<User>, UsersClient>()
+   .AddTypedClient<IRoleStore<Role>, RolesClient>();
+
 services.Configure<IdentityOptions>(opt =>
 {
 #if DEBUG
@@ -65,7 +79,6 @@ services.ConfigureApplicationCookie(opt =>
 //services.AddScoped<IOrderService, SqlOrderService>();
 services.AddScoped<ICartService, InCookiesCartService>();
 
-var configuration = builder.Configuration;
 //services.AddHttpClient<IValuesService, ValuesClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
 //services.AddHttpClient<IEmployeesData, EmployeesClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
 //services.AddHttpClient<IProductData, ProductsClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
