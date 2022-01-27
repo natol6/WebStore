@@ -16,7 +16,7 @@ namespace WebStore.Interfaces
         public static class Identity
         {
             public const string Users = "api/vusers";
-            public const string Roles = "api/v1/roles";
+            public const string Roles = "api/roles";
         }
     }
 }
