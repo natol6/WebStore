@@ -10,6 +10,9 @@ using WebStore.Services.Services.InSQL;
 using WebStore.Services.Services.InCookies;
 using WebStore.WebAPI.Clients.Values;
 using WebStore.Interfaces.TestAPI;
+using WebStore.WebAPI.Clients.Employees;
+using WebStore.WebAPI.Clients.Products;
+using WebStore.WebAPI.Clients.Orders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,14 +59,23 @@ services.ConfigureApplicationCookie(opt =>
     opt.SlidingExpiration = true;
 });
 
-services.AddScoped<IEmployeesData, SqlEmployeesData>();
-services.AddScoped<IProductData, SqlProductData>();
-services.AddScoped<IPositionsData, SqlPositionsData>();
-services.AddScoped<IOrderService, SqlOrderService>();
+//services.AddScoped<IEmployeesData, SqlEmployeesData>();
+//services.AddScoped<IProductData, SqlProductData>();
+//services.AddScoped<IPositionsData, SqlPositionsData>();
+//services.AddScoped<IOrderService, SqlOrderService>();
 services.AddScoped<ICartService, InCookiesCartService>();
 
 var configuration = builder.Configuration;
-services.AddHttpClient<IValuesService, ValuesClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
+//services.AddHttpClient<IValuesService, ValuesClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
+//services.AddHttpClient<IEmployeesData, EmployeesClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
+//services.AddHttpClient<IProductData, ProductsClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
+//services.AddHttpClient<IOrderService, OrdersClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
+
+services.AddHttpClient("WebStoreAPI", client => client.BaseAddress = new(configuration["WebAPI"]))
+   .AddTypedClient<IValuesService, ValuesClient>()
+   .AddTypedClient<IEmployeesData, EmployeesClient>()
+   .AddTypedClient<IProductData, ProductsClient>()
+   .AddTypedClient<IOrderService, OrdersClient>();
 
 var app = builder.Build();
 
