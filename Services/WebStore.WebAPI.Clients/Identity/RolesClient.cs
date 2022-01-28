@@ -14,7 +14,7 @@ namespace WebStore.WebAPI.Clients.Identity
 {
     public class RolesClient : BaseClient, IRolesClient
     {
-        public RolesClient(HttpClient Client, string Address) : base(Client, WebAPIAddresses.Identity.Roles)
+        public RolesClient(HttpClient Client) : base(Client, WebAPIAddresses.Identity.Roles)
         {
         }
         #region IRoleStore<Role>
