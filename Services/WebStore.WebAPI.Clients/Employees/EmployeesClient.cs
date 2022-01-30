@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WebStore.Domain.DTO.Employees;
 using WebStore.Domain.People;
 using WebStore.Domain.References;
+using WebStore.Interfaces;
 using WebStore.Interfaces.Services;
 using WebStore.WebAPI.Clients.Base;
 
@@ -14,7 +15,7 @@ namespace WebStore.WebAPI.Clients.Employees
 {
     public class EmployeesClient : BaseClient, IEmployeesData
     {
-        public EmployeesClient(HttpClient Client) : base(Client, "api/employees")
+        public EmployeesClient(HttpClient Client) : base(Client, WebAPIAddresses.Employees)
         {
         }
 
