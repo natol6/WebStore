@@ -17,6 +17,12 @@ using WebStore.WebAPI.Clients.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//builder.Logging
+//.ClearProviders()
+//.AddConsole(opt => opt.LogToStandardErrorThreshold = LogLevel.Information)
+//.AddFilter("Microsoft", level => level >= LogLevel.Information)
+//.AddFilter<DebugLoggerProvider>((category, level) => category.StartsWith("Microsoft") && level > LogLevel.Debug)
+//;
 
 var services = builder.Services;
 var configuration = builder.Configuration;
