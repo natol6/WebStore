@@ -14,6 +14,7 @@ using WebStore.WebAPI.Clients.Employees;
 using WebStore.WebAPI.Clients.Products;
 using WebStore.WebAPI.Clients.Orders;
 using WebStore.WebAPI.Clients.Identity;
+using WebStore.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,7 @@ var builder = WebApplication.CreateBuilder(args);
 //.AddFilter("Microsoft", level => level >= LogLevel.Information)
 //.AddFilter<DebugLoggerProvider>((category, level) => category.StartsWith("Microsoft") && level > LogLevel.Debug)
 //;
+builder.Logging.AddLog4Net();
 
 var services = builder.Services;
 var configuration = builder.Configuration;
