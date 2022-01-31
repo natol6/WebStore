@@ -131,6 +131,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseMiddleware<TestMiddleware>();
 app.UseWelcomePage("/welcome");
 
