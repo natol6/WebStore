@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebStore.Domain.Entities;
+using WebStore.Interfaces.Services;
 
 namespace WebStore.Services.Services.InCookies
 {
-    public class InCookiesCartStore
+    public class InCookiesCartStore : ICartStore
     {
         private readonly IHttpContextAccessor _HttpContextAccessor;
         private readonly string _CartName;
