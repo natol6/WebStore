@@ -3,11 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Interfaces.Services;
+using WebStore.Logging;
 using WebStore.Services.Services;
 using WebStore.Services.Services.InCookies;
 using WebStore.Services.Services.InSQL;
+using WebStoreWebAPI.Infrastructure.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.AddLog4Net();
 
 // Add services to the container.
 
@@ -71,6 +75,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
 
