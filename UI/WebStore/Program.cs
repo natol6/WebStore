@@ -99,7 +99,8 @@ services.ConfigureApplicationCookie(opt =>
 //services.AddScoped<IProductData, SqlProductData>();
 //services.AddScoped<IPositionsData, SqlPositionsData>();
 //services.AddScoped<IOrderService, SqlOrderService>();
-services.AddScoped<ICartService, InCookiesCartService>();
+services.AddScoped<ICartService, CartService>();
+services.AddScoped<ICartStore, InCookiesCartStore>();
 
 //services.AddHttpClient<IValuesService, ValuesClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
 //services.AddHttpClient<IEmployeesData, EmployeesClient>(client => client.BaseAddress = new(configuration["WebAPI"]));
