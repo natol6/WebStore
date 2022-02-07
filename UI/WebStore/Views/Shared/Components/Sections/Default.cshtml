@@ -36,7 +36,7 @@
 	{
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h4 class="panel-title">
+				<h4 class="panel-title" @(parent_section.Id == Model.SectionId ? "class=active" : null)>
 					<a asp-controller="Catalog" asp-action="Index" asp-route-SectionId="@parent_section.Id">
 						@parent_section.Name
 					</a>
