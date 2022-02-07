@@ -13,26 +13,14 @@ namespace WebStore.Controllers
 
         public HomeController(IProductData ProductData) => _ProductData = ProductData;
 
-        public IActionResult Index(int? brandId, int? sectionId)
+        public IActionResult Index()
         {
-            var filter = new ProductFilter
-            {
-                BrandId = brandId,
-                SectionId = sectionId,
-            };
-
-            var products = _ProductData
-                .GetProducts(filter)
+           ViewBag.Products = _ProductData
+                .GetProducts()
                 .OrderBy(p => p.Order)
                 .Take(6)
                 .ToView();
-            
-            ViewBag.Products = new CatalogViewModel
-            {
-                Products = products,
-                SectionId = sectionId,
-                BrandId = brandId,
-            };
+                        
             return View();
         }
         
