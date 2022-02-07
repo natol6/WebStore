@@ -24,16 +24,22 @@
         {
            <li><a ws-is-active-route asp-controller="Employees" asp-action="Index">Сотрудники</a></li> 
         }*@
-        <li><a ws-is-active-route ws-ignore-action asp-controller="WebAPI" asp-action="Index">WebAPI</a></li> 
+        <li><a asp-controller="WebAPI" asp-action="Index" class="@IsActive("WebAPI")">WebAPI</a></li> 
     </ul>
 </div>
 
 @functions{
 
-    string? IsActive(string Controller, string Action = "Index") =>
-        Equals(ViewContext.RouteData.Values["controller"], Controller) &&
-        Equals(ViewContext.RouteData.Values["action"], Action)
-            ? "active"
-            : null;
+    string? IsActive(string Controller, string Action = "Index")
+    {
+        var _action = ViewContext.RouteData.Values["action"].ToString().ToLower();
+        var _controller = ViewContext.RouteData.Values["controller"].ToString().ToLower();
+        if(Equals(_controller, Controller.ToString().ToLower()) && Equals(_action, Action.ToString().ToLower()))
+        {
+            return "active";
+        }
+        return null;
+    }
+    
 
 }

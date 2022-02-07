@@ -36,13 +36,15 @@ namespace WebStore.TagHelpers
         {
             var route_values = ViewContext.RouteData.Values;
 
-            var route_controller = route_values["controller"]?.ToString();
-            var route_action = route_values["action"]?.ToString();
+            var route_controller = route_values["controller"]?.ToString().ToLower();
+            var route_action = route_values["action"]?.ToString().ToLower();
+            var controller = Controller is { Length: > 0 } ? Controller.ToString().ToLower() : null;
+            var action = Action is { Length: > 0 } ? Action.ToString().ToLower() : null;
 
-            if (!IgnoreAction && Action is { Length: > 0 } action && !string.Equals(action, route_action))
+            if (!IgnoreAction && Action is { Length: > 0 } && !string.Equals(action, route_action))
                 return false;
 
-            if (Controller is { Length: > 0 } controller && !string.Equals(controller, route_controller))
+            if (Controller is { Length: > 0 } && !string.Equals(controller, route_controller))
                 return false;
 
             foreach (var (key, value) in RouteValues)
