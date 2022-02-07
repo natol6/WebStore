@@ -9,7 +9,19 @@ namespace WebStore.Components
     {
         private readonly IProductData _ProductData;
         public BrandsViewComponent(IProductData productData) => _ProductData = productData;
-        public IViewComponentResult Invoke() => View(GetBrands());
+        public IViewComponentResult Invoke(string BrandId)
+        {
+            var brand_id = int.TryParse(BrandId, out var id) ? id : (int?)null;
+
+            var brands = GetBrands();
+            
+            return View(new SelectableBrandsViewModel
+            {
+                BrandId = brand_id,
+                Brands = brands,
+            });
+        }
+
         private IEnumerable<BrandViewModel> GetBrands() =>
             _ProductData.GetBrands()
             .OrderBy(b => b.Order)
