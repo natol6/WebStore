@@ -9,17 +9,10 @@ namespace WebStore.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IProductData _ProductData;
-
-        public HomeController(IProductData ProductData) => _ProductData = ProductData;
-
-        public IActionResult Index()
+        public IActionResult Index([FromServices] IProductData ProductData)
         {
-           ViewBag.Products = _ProductData
-                .GetProducts()
-                .OrderBy(p => p.Order)
-                .Take(6)
-                .ToView();
+            var products = ProductData.GetProducts().OrderBy(p => p.Order).Take(6).ToView();
+            ViewBag.Products = products;
                         
             return View();
         }
