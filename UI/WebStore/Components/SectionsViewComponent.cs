@@ -8,8 +8,22 @@ namespace WebStore.Components
     {
         private readonly IProductData _ProductData;
         public SectionsViewComponent(IProductData productData) => _ProductData = productData;
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(string SectionId)
         {
+            var section_id = int.TryParse(SectionId, out var id) ? id : (int?)null;
+
+            var sections = GetSections(section_id, out var parent_section_id);
+
+            return View(new SelectableSectionsViewModel 
+            {
+                Sections = sections,
+                SectionId = section_id,
+                ParentSectionId = parent_section_id,
+            });
+        }
+        private IEnumerable<SectionViewModel> GetSections(int? SectionId, out int? ParentsectionId)
+        {
+            ParentsectionId = null;
             var sections = _ProductData.GetSections();
             var parent_sections = sections.Where(s => s.ParentId is null);
             var parent_sections_view = parent_sections
@@ -25,6 +39,10 @@ namespace WebStore.Components
                 var childs = sections.Where(s => s.ParentId == parent_section.Id);
 
                 foreach (var child_section in childs)
+                {
+                    if(child_section.Id == SectionId)
+                        ParentsectionId = child_section.ParentId;
+                    
                     parent_section.ChildSections.Add(new SectionViewModel
                     {
                         Id = child_section.Id,
@@ -32,11 +50,14 @@ namespace WebStore.Components
                         Order = child_section.Order,
                         Parent = parent_section
                     });
+                }
+                    
 
                 parent_section.ChildSections.Sort((a, b) => Comparer<int>.Default.Compare(a.Order, b.Order));
             }
             parent_sections_view.Sort((a, b) => Comparer<int>.Default.Compare(a.Order, b.Order));
-            return View(parent_sections_view);
+            
+            return parent_sections_view;
         }
         
     }

@@ -60,7 +60,7 @@ namespace WebStoreWebAPI.Controllers
         [HttpGet("{Id}")]
         public IActionResult GetProductById(int Id)
         {
-            var product = _ProductData.GetSectionById(Id);
+            var product = _ProductData.GetProductById(Id);
             if (product is null)
                 return NotFound();
 
