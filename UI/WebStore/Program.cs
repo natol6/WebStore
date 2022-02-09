@@ -144,7 +144,7 @@ app.UseEndpoints(endpoints =>
     );
     endpoints.MapControllerRoute(
     name: "default",
-    pattern: "{controller=home}/{action=index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 });
 
 app.MapGet("/throw", () =>
