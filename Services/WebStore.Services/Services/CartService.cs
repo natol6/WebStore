@@ -81,7 +81,7 @@ namespace WebStore.Services.Services
                 Ids = cart.Items.Select(i => i.ProductId).ToArray()
             });
 
-            var priducts_views = products.ToView().ToDictionary(p => p!.Id);
+            var priducts_views = products.Products.ToView().ToDictionary(p => p!.Id);
 
             return new()
             {
