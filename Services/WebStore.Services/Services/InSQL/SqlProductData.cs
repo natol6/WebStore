@@ -12,19 +12,37 @@ namespace WebStore.Services.Services.InSQL
 
         public SqlProductData(WebStoreDB db) => _db = db;
 
-        public IEnumerable<Brand> GetBrands() => _db.Brands;
+        public IEnumerable<Brand> GetBrands(int Skip = 0, int? Take = null)
+        {
+            IQueryable<Brand> query = _db.Brands;
+            if (Skip > 0) query = query.Skip(Skip);
+            if (Take > 0) query = query.Take((int)Take);
+
+            return query.AsEnumerable();
+        }
+
+        public int GetBrandsCount() => _db.Brands.Count();
 
         public Brand? GetBrandById(int Id) => _db.Brands
             .Include(b => b.Products)
             .FirstOrDefault(b => b.Id == Id);
 
-        public IEnumerable<Section> GetSections() => _db.Sections;
+        public IEnumerable<Section> GetSections(int Skip = 0, int? Take = null)
+        {
+            IQueryable<Section> query = _db.Sections;
+            if(Skip > 0) query = query.Skip(Skip);
+            if (Take > 0) query = query.Take((int)Take);
+            
+            return query.AsEnumerable();
+        }
+
+        public int GetSectionsCount() => _db.Sections.Count();
 
         public Section? GetSectionById(int Id) => _db.Sections
             .Include(s => s.Products)
             .FirstOrDefault(s => s.Id == Id);
 
-        public IEnumerable<Product> GetProducts(ProductFilter? Filter = null)
+        public ProductsPage GetProducts(ProductFilter? Filter = null)
         {
             IQueryable<Product> query = _db.Products
            .Include(p => p.Brand)
@@ -41,7 +59,24 @@ namespace WebStore.Services.Services.InSQL
                     query = query.Where(p => p.BrandId == brand_id);
             }
 
-            return query;
+            var count = query.Count();
+
+            //if (Filter != null && Filter.PageSize > 0 && Filter.Page > 0)
+            //{
+            //    var page_size = (int)Filter.PageSize;
+            //    var page = Filter.Page;
+
+            //    query = query
+            //       .Skip((page - 1) * page_size)
+            //       .Take(page_size);
+            //}
+            
+            if (Filter is { PageSize: > 0 and var page_size, Page: > 0 and var page })
+                query = query
+                   .Skip((page - 1) * page_size)
+                   .Take(page_size);
+
+            return new(query.AsEnumerable(), count);
         }
 
         public Product? GetProductById(int Id) => _db.Products
