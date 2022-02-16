@@ -7,5 +7,14 @@
 @RenderBody()
 	
 <partial name="Partial/_Footer"/>
+
+@section Styles
+{
+	@await RenderSectionAsync("Styles", false)
+}
+@section Scripts
+{
+	@await RenderSectionAsync("Scripts", false)
+}
 	
    
