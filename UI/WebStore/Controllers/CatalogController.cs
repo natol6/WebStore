@@ -23,7 +23,7 @@ namespace WebStore.Controllers
         public IActionResult Index(int? brandId, int? sectionId, int Page = 1, int? PageSize = null) 
         {
             var page_size = PageSize
-            ?? (int.TryParse(_Configuration["CatalogPageSize"], out var value) ? value : null);
+            ?? (int.TryParse(_Configuration[__CatalogPageSize], out var value) ? value : null);
 
             var filter = new ProductFilter
             {
