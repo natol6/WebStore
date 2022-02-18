@@ -19,6 +19,10 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Extensions.Logging;
 using Serilog.Formatting.Json;
+using Microsoft.Extensions.DependencyInjection;
+using Polly;
+using Polly.Extensions.Http;
+using WebStore.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,7 +65,9 @@ services.AddHttpClient("WebStoreAPIIdentity", client => client.BaseAddress = new
    .AddTypedClient<IUserTwoFactorStore<User>, UsersClient>()
    .AddTypedClient<IUserClaimStore<User>, UsersClient>()
    .AddTypedClient<IUserLoginStore<User>, UsersClient>()
-   .AddTypedClient<IRoleStore<Role>, RolesClient>();
+   .AddTypedClient<IRoleStore<Role>, RolesClient>()
+   .AddPolicyHandler(GetRetryPolicy())
+   .AddPolicyHandler(GetCircuitBreakerPolicy());
 
 services.Configure<IdentityOptions>(opt =>
 {
@@ -111,15 +117,28 @@ services.AddHttpClient("WebStoreAPI", client => client.BaseAddress = new(configu
    .AddTypedClient<IValuesService, ValuesClient>()
    .AddTypedClient<IEmployeesData, EmployeesClient>()
    .AddTypedClient<IProductData, ProductsClient>()
-   .AddTypedClient<IOrderService, OrdersClient>();
+   .AddTypedClient<IOrderService, OrdersClient>()
+   .AddPolicyHandler(GetRetryPolicy())
+   .AddPolicyHandler(GetCircuitBreakerPolicy());
+
+static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy(int MaxRetryCount = 5, int MaxJitterTime = 1000)
+{
+    var jitter = new Random();
+    return HttpPolicyExtensions
+       .HandleTransientHttpError()
+       .WaitAndRetryAsync(MaxRetryCount, RetryAttempt =>
+            TimeSpan.FromSeconds(Math.Pow(2, RetryAttempt)) +
+            TimeSpan.FromMilliseconds(jitter.Next(0, MaxJitterTime)));
+}
+
+static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy() =>
+    HttpPolicyExtensions
+       .HandleTransientHttpError()
+       .CircuitBreakerAsync(handledEventsAllowedBeforeBreaking: 5, TimeSpan.FromSeconds(30));
+
+services.AddSignalR();
 
 var app = builder.Build();
-
-await using (var scope = app.Services.CreateAsyncScope())
-{
-    var db_initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-    await db_initializer.InitializeAsync(RemoveBefore: false).ConfigureAwait(true);
-}
 
 if (app.Environment.IsDevelopment())
 {
@@ -138,6 +157,8 @@ app.UseWelcomePage("/welcome");
 
 app.UseEndpoints(endpoints =>
 {
+    endpoints.MapHub<ChatHub>("/chat");
+
     endpoints.MapControllerRoute(
       name: "areas",
       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
