@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+﻿
+using Microsoft.AspNetCore.SignalR.Client;
 
 var builder = new HubConnectionBuilder();
-var connection = builder.WithUrl("http://localhost:5126/AjaxTest/Chat").Build();
+var connection = builder.WithUrl("http://localhost:5126/сhat").Build();
 
 using var registration = connection.On<string>("MessageFromClient", MessageFromClient);
 
